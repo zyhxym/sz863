@@ -1,0 +1,47 @@
+<div style="margin-top: 20px">
+    <div class="row ">
+        <div class="col-md-3 env-panel">
+            <h4> {{diagnosis.name}} </h4>
+            <div ng-repeat="n in diagnosis.names">
+                <p ng-click="printcode(diagnosis.codes[$index],n)">{{n}} <code>{{diagnosis.status[$index]}}</code></p>
+            </div>
+        </div>
+        <div class="col-md-3 env-panel">
+            <h4> {{forecast.name}} </h4>
+            <div ng-repeat="n in forecast.names">
+                <p ng-click="printcode(forecast.codes[$index],n)">{{n}} <code>{{forecast.status[$index]}}</code></p>
+            </div>
+        </div>
+        <div class="col-md-3 env-panel">
+            <h4> {{lifeadvice.name}} </h4>
+            <div ng-repeat="n in lifeadvice.names">
+                <p ng-click="printcode(lifeadvice.codes[$index],n)">{{n}} <code>{{lifeadvice.status[$index]}}</code></p>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-3 env-panel">
+            <h4> {{medicinegroup.name}} </h4>
+            <div ng-repeat="n in medicinegroup.names">
+                <p ng-click="printcode(medicinegroup.codes[$index],n)">{{n}} <code>{{medicinegroup.status[$index]}}</code></p>
+            </div>
+        </div>
+        <div class="col-md-3 env-panel">
+            <h4> {{medicineungroup.name}} </h4>
+            <div ng-repeat="n in medicineungroup.names">
+                <p ng-click="printcode(medicineungroup.codes[$index],n)">{{n}} <code>{{medicineungroup.status[$index]}}</code></p>
+            </div>
+        </div>
+        <div class="col-md-3 env-panel">
+            <h4> {{inspectionadvice.name}} </h4>
+            <div ng-repeat="n in inspectionadvice.names">
+                <p ng-click="printcode(inspectionadvice.codes[$index],n)">{{n}} <code>{{inspectionadvice.status[$index]}}</code></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    $("#popover1").popover();
+});
+</script>
