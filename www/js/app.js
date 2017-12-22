@@ -1,93 +1,65 @@
 'use strict'
 
-angular.module('IntelligentDetector', ['ui.router', 'controllers', 'services', 'directives', 'ngTable', 'ngAnimate', 'filters'])
+angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers', 'services', 'directives', 'ngTable', 'ngAnimate', 'filters'])
+
 
     .config(['$stateProvider', '$urlRouterProvider',
-      function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/login')
-        $urlRouterProvider.when('/users', '/main/users/allusers')
-        $urlRouterProvider.when('/monitors', '/main/monitors/input')
-        $urlRouterProvider.when('/output', '/main/monitors/output')
-        $urlRouterProvider.when('/input', '/main/monitors/input')
+        function($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.otherwise('/login')
 
-        $stateProvider
+            $stateProvider
                 // 登录
                 .state('login', {
-                  url: '/login',
-                  templateUrl: 'templates/login.html',
-                  controller: 'LoginCtrl'
-                })
-                // 注册
-                .state('register', {
-                  url: '/register',
-                  templateUrl: 'templates/register.html',
-                  controller: 'RegisterCtrl'
+                    url: '/login',
+                    templateUrl: 'templates/login.html',
+                    controller: 'LoginCtrl'
                 })
                 // 主页面
                 .state('main', {
-                  url: '/main',
-                  templateUrl: 'templates/main.html',
-                  controller: 'MainCtrl'
+                    url: '/main',
+                    templateUrl: 'templates/main.html',
+                    controller: 'MainCtrl'
+                })
+                .state('main.select', {
+                    url: '/select',
+                    templateUrl: 'templates/select.html',
+                    controller: 'selectCtrl'
                 })
                 .state('main.monitors', {
-                  abstract: true,
-                  url: '/monitors',
-                  templateUrl: 'templates/monitors.html'
+                    url: '/monitors',
+                    templateUrl: 'templates/monitors.html',
+                    controller: 'MonitorsCtrl'
                 })
-                // 监控
-                .state('main.monitors.output', {
-                  url: '/output',
-                  templateUrl: 'templates/monitors/output.html',
-                  controller: 'outputCtrl'
+                .state('main.input', {
+                    url: '/input',
+                    templateUrl: 'templates/input.html',
+                    controller: 'inputCtrl'
                 })
-                .state('main.monitors.input', {
-                  url: '/input',
-                  templateUrl: 'templates/monitors/input.html',
-                  controller: 'inputCtrl'
-                })
-                // 设置
-                .state('setPassword', {
-                  url: '/setPassword',
-                  templateUrl: 'templates/settings/setPassword.html',
-                  controller: 'SetPasswordCtrl'
-                })
-                .state('changePassword', {
-                  url: '/changePassword',
-                  templateUrl: 'templates/settings/changePassword.html',
-                  controller: 'ChangePasswordCtrl'
-                })
-                .state('phoneValid', {
-                  url: '/phoneValid',
-                  templateUrl: 'templates/settings/phoneValid.html',
-                  controller: 'phoneValidCtrl'
-                })
-                .state('userDetail', {
-                  url: '/userDetail',
-                  templateUrl: 'templates/settings/userdetail.html'
-                })
-      }
-    ])
 
-    .run(['$rootScope', '$stateParams', 'Storage', function ($rootScope, $stateParams, Storage) {
-      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fronParams) {
-            // console.log(fromState);
-        if (fromState.name == 'main.data.testResult') {
-          Storage.rm('ObjectNo')
-          Storage.rm('ObjCompany')
-          Storage.rm('ObjIncuSeq')
+                .state('main.monitors.inspection', {
+                    url: '/inspection',
+                    templateUrl: 'templates/monitors/inspection.html',
+                    controller: 'inspectionCtrl'
+                })
+                .state('main.monitors.risk', {
+                    url: '/risk',
+                    templateUrl: 'templates/monitors/risk.html',
+                    controller: 'riskCtrl'
+                })
+                .state('main.monitors.medicine', {
+                    url: '/medicine',
+                    templateUrl: 'templates/monitors/medicine.html',
+                    controller: 'medicineCtrl'
+                })
+                .state('main.monitors.life', {
+                    url: '/life',
+                    templateUrl: 'templates/monitors/life.html',
+                    controller: 'lifeCtrl'
+                })
+                .state('main.monitors.assess', {
+                    url: '/assess',
+                    templateUrl: 'templates/monitors/assess.html',
+                    controller: 'assessCtrl'
+                })
         }
-            // console.log(toState.name);
-        switch (toState.name) {
-          case 'main.monitors.input':
-            $('#mytabs a[href="#monitors"]').tab('show')
-            $('#mypills a[href="#input"]').tab('show')
-            break
-          case 'main.monitors.output':
-                    // $('#mytabs a[href="#monitors"]').tab('show');
-            $('#mypills a[href="#output"]').tab('show')
-            break
-          default:
-            break
-        }
-      })
-    }])
+    ])
