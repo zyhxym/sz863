@@ -6,9 +6,9 @@ angular.module('IntelligentDetector', ['ui.router', 'controllers', 'services', '
         function($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise("/login");
             $urlRouterProvider.when('/users', '/main/users/allusers');
-            $urlRouterProvider.when('/monitors', '/main/monitors/realTime');
-            $urlRouterProvider.when('/monitorDebug', '/main/monitors/monitorDebug');
-            $urlRouterProvider.when('/realTime', '/main/monitors/realTime');
+            $urlRouterProvider.when('/monitors', '/main/monitors/input');
+            $urlRouterProvider.when('/output', '/main/monitors/output');
+            $urlRouterProvider.when('/input', '/main/monitors/input');
 
             $stateProvider
                 // 登录
@@ -35,15 +35,15 @@ angular.module('IntelligentDetector', ['ui.router', 'controllers', 'services', '
                     templateUrl: 'templates/monitors.html',
                 })
                 // 监控
-                .state('main.monitors.monitorDebug', {
-                    url: "/monitorDebug",
-                    templateUrl: 'templates/monitors/monitorDebug.html',
-                    controller: 'MonitorCtrl'
+                .state('main.monitors.output', {
+                    url: "/output",
+                    templateUrl: 'templates/monitors/output.html',
+                    controller: 'outputCtrl'
                 })
-                .state('main.monitors.realTime', {
-                    url: "/realTime",
-                    templateUrl: 'templates/monitors/realTime.html',
-                    controller: "RealTimeCtrl"
+                .state('main.monitors.input', {
+                    url: "/input",
+                    templateUrl: 'templates/monitors/input.html',
+                    controller: "inputCtrl"
                 })
                 // 设置
                 .state('setPassword', {
@@ -78,13 +78,13 @@ angular.module('IntelligentDetector', ['ui.router', 'controllers', 'services', '
             }
             // console.log(toState.name);
             switch (toState.name) {
-                case 'main.monitors.realTime':
+                case 'main.monitors.input':
                     $('#mytabs a[href="#monitors"]').tab('show');
-                    $('#mypills a[href="#realTime"]').tab('show');
+                    $('#mypills a[href="#input"]').tab('show');
                     break;
-                case 'main.monitors.monitorDebug':
+                case 'main.monitors.output':
                     // $('#mytabs a[href="#monitors"]').tab('show');
-                    $('#mypills a[href="#monitorDebug"]').tab('show');
+                    $('#mypills a[href="#output"]').tab('show');
                     break;
                 default:
                     break;

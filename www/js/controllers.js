@@ -427,20 +427,8 @@
         }
     }])
 
-    .controller('RealTimeCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', 'SocketService', function(UserService, $scope, $state, Storage, $timeout, SocketService) {
+    .controller('outputCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', 'SocketService', function(UserService, $scope, $state, Storage, $timeout, SocketService) {
 
-
-        $scope.status = "No Connection";
-
-
-        SocketService.on('connect', function() {
-            // console.log('Connected');
-            $scope.status = "Connected"
-        });
-
-        SocketService.on('disconnect', function() {
-            $scope.status = "No Connection"
-        });
 
         SocketService.on('message', function(data) {
             // console.log(data);
@@ -473,175 +461,47 @@
         });
 
 
-        $scope.isolator1 = {
-            name: "进料区",
-            env_names: ["进料区温度", "进料区湿度", "进料区压力", "进料区风速", "进料区过氧化氢浓度"],
-            env_codes: ["1", "2", "3", "4", "5"],
-            env_status: [1, 1, 1, 1, 1],
-            instr_names: [
-                "进料区灭菌器",
+        $scope.diagnosis = {
+            name: "诊断结果",
+            names: ["脑卒中", "流行性感冒", "手足口病", "糖尿病", "高血压"],
+            codes: ["1", "2", "3", "4", "5"],
+            status: [1, 1, 1, 1, 1],
+        };
 
-                "进料区与进料待加工区之间的门",
-                "进料区导轨"
+        $scope.forecast = {
+            name: "风险预测",
+            names: ["脑卒中", "流行性感冒", "手足口病", "糖尿病", "高血压"],
+            codes: ["1", "2", "3", "4", "5"],
+            status: [1, 1, 1, 1, 1],
+        };
 
-
-            ],
-            instr_codes: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ]
-
+        $scope.lifeadvice = {
+            name: "生活建议",
+            names: ["运动", "素食", "规律生活", "以及", "其他"],
+            codes: ["1", "2", "3", "4", "5"],
+            status: [1, 1, 1, 1, 1],
 
         };
 
-        $scope.isolator2 = {
-            name: "进料待加工区",
-            env_names: ["进料待加工区温度", "进料待加工区湿度", "进料待加工区压力", "进料待加工区风速", "进料待加工区过氧化氢浓度"],
-            env_codes: ["1", "2", "3", "4", "5"],
-            env_status: [1, 1, 1, 1, 1],
-            instr_names: [
-
-                "进料待加工区灭菌器",
-                "加工区灭菌器",
-                "待出料区灭菌器",
-
-
-
-
-
-            ],
-            instr_codes: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ]
-
-
+        $scope.medicinegroup = {
+            name: "分组药物",
+            names: ["药物1", "药物2", "药物3", "药物4", "药物5"],
+            codes: ["1", "2", "3", "4", "5"],
+            status: [1, 1, 1, 1, 1],
         };
 
-        $scope.isolator3 = {
-            name: "加工区",
-            env_names: ["加工区温度", "加工区湿度", "加工区压力", "加工区风速", "加工区过氧化氢浓度"],
-            env_codes: ["1", "2", "3", "4", "5"],
-            env_status: [1, 1, 1, 1, 1],
-            instr_names: [
-
-
-                "加工区灭菌器",
-
-
-
-                "出料区导轨",
-                "待出料区与出料区之间的门"
-
-            ],
-            instr_codes: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ]
-
-
+        $scope.medicineungroup = {
+            name: "未分组药物",
+            names: ["药物1", "药物2", "药物3", "药物4", "药物5"],
+            codes: ["1", "2", "3", "4", "5"],
+            status: [1, 1, 1, 1, 1],
         };
-
-        $scope.isolator4 = {
-            name: "待出料区",
-            env_names: ["待出料区温度", "待出料区湿度", "待出料区压力", "待出料区风速", "待出料区过氧化氢浓度"],
-            env_codes: ["1", "2", "3", "4", "5"],
-            env_status: [1, 1, 1, 1, 1],
-            instr_names: [
-
-                "待出料区灭菌器",
-
-
-
-                "待出料区与出料区之间的门"
-
-            ],
-            instr_codes: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ]
-
-
-        };
-        $scope.isolator5 = {
-            name: "出料区",
-            env_names: ["出料区温度", "出料区湿度", "出料区压力", "出料区风速", "出料区过氧化氢浓度"],
-            env_codes: ["1", "2", "3", "4", "5"],
-            env_status: [1, 1, 1, 1, 1],
-            instr_names: [
-
-                "出料区灭菌器",
-
-
-                "出料区导轨"
-
-            ],
-            instr_codes: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ]
-
-        };
-
-        $scope.isolator = {
-            name: "出料区",
-            env_names: ["温度", "湿度", "压力", "风速", "过氧化氢浓度"],
-            env_codes: ["1", "2", "3", "4", "5"],
-            env_status: [1, 1, 1, 1, 1],
-            instr_names: [
-                "进料区灭菌器",
-                "进料待加工区灭菌器",
-                "加工区灭菌器",
-                "待出料区灭菌器",
-                "出料区灭菌器",
-                "进料区与进料待加工区之间的门",
-                "进料区导轨",
-                "加工区导轨",
-                "出料区导轨",
-                "待出料区与出料区之间的门",
-                "机械臂"
-            ],
-            instr_codes: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
-            ]
-
-
-        };
-        $scope.incubator = {
-            name: "培养箱",
-            env_names: ["培养箱温度"],
-            env_codes: ["1"],
-            env_status: ["35 ℃"],
-            instr_names: [
-                "培养箱门",
-                "上层外圈转盘",
-                "上层内圈转盘",
-                "下层外圈转盘",
-                "下层内圈转盘",
-                "顶空电源",
-                "视觉光源",
-                "工业相机",
-                "顶空分析",
-                "支架电机"
-            ],
-            instr_codes: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-            instr_status: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-            ]
-        };
+        $scope.inspectionadvice = {
+            name: "检查建议",
+            names: ["MRI"],
+            codes: ["1"],
+            status: ["35 ℃"],
+           };
 
         $scope.printcode = function(code, name) {
             // console.log(code);
@@ -651,7 +511,7 @@
         }
     }])
 
-    .controller('MonitorCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', 'SocketService', '$rootScope',
+    .controller('inputCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', 'SocketService', '$rootScope',
         function(UserService, $scope, $state, Storage, $timeout, SocketService, $rootScope) {
 
 
