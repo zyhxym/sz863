@@ -1,6 +1,6 @@
 ﻿angular.module('controllers', ['ngResource', 'services'])
 
-    .controller('LoginCtrl', [ '$scope', '$state', 'Storage', '$timeout', function ($scope, $state, Storage, $timeout) {
+    .controller('LoginCtrl', [ '$scope', '$state', 'Storage', '$timeout', 'Ontology', 'Evaluation', function ($scope, $state, Storage, $timeout, Ontology, Evaluation) {
         // 捆绑变量
       $scope.logStatus = '   '
 
@@ -19,31 +19,32 @@
       $scope.login.role = 'doctor' // 默认选中医生角色
       var findUser = (function initailDatabase () {
         var User = new Map()
-        User.set('marry', {password: 'marry,,,', role: 'doctor', guid: 'P0000125'})
-        User.set('davaid', {password: 'davaid,,,', role: 'doctor', guid: 'P0000121'})
-        User.set('kingsley', {password: 'kingsley,,,', role: 'administrator', guid: null})
+        User.set('marry', {password: 'marry,,,', role: 'doctor'})
+        User.set('kingsley', {password: 'kingsley,,,', role: 'administrator'})
         return function (logInfo) {
           var result = User.get(logInfo.name)
           console.log(result)
           if (result) {
-            return result.password === logInfo.password && result.role === logInfo.role ? result.guid : undefined
+            return (result.password === logInfo.password && result.role === logInfo.role)
           }
         }
       }())
 
       $scope.LogIn = function (login) {
-        console.log(login)
         var user = findUser(login)
 
-        if (user === undefined) {
-            // 可能是管理员
-          $scope.logStatus = '用户名或密码错误。'
-        } else if (user === undefined) {
+        if (user) {
+            // 可能是管理员 也可能是 医生
           $scope.logStatus = '恭喜您！登录成功。'
+          // 录入本体
+          Ontology.readONT().then(function (data) {})
+          if (login.role === 'doctor') {
+
+          } else {
+
+          }
         } else {
-            // 登录正常
-          $scope.logStatus = '恭喜您！登录成功。'
-          Storage.set('UID', user)
+          $scope.logStatus = '用户名或密码错误。'
         }
       }
 
@@ -57,282 +58,6 @@
       //   $state.go('phoneValid')
       // }
     }])
-
-    // .controller('phoneValidCtrl', ['$scope', '$timeout', '$interval', 'Storage', '$state', 'UserService', function ($scope, $timeout, $interval, Storage, $state, UserService) {
-    //   $scope.telnumber = ''
-    //   $scope.validnumber = ''
-    //   $scope.check = ''
-    //   $scope.validStatus = '点击发送验证码'
-    //   $scope.title = ' '
-    //   $scope.if_disabled = false
-    //   switch (Storage.get('setPasswordState')) {
-    //     case 'register':
-    //       $scope.title = '注册'
-    //       break
-    //     case 'reset':
-    //       $scope.title = '找回密码'
-    //       break
-    //     default:
-    //       $scope.title = '注册'
-    //   }
-
-    //   var uid_valid = /^UID\d{11}/
-    //   var RegisterNewUser = function (tel) {
-    //     UserService.CreateNewUserId(tel).then(function (data) {
-    //             // 转换成 json
-    //       data = data.toJSON()
-    //       var t = ''
-    //       for (i in data) {
-    //         t = t + data[i]
-    //       }
-    //       data = t
-
-    //             // console.log(data);
-    //       if (data == '该手机号已经注册') {
-    //         $scope.validStatus = '该手机号已经注册'
-    //       } else if (uid_valid.test(data)) {
-    //         $scope.validStatus = '生成新用户ID成功'
-    //         Storage.set('UID', data)
-    //         UserService.SetUID(data)
-    //         UserService.SetPhenoNo(tel)
-    //       } else {
-    //         $scope.validStatus = '生成新用户ID失败'
-    //       }
-    //     }, function (er) {
-    //       console.log(er)
-    //       $scope.validStatus = '验证失败'
-    //     })
-    //   }
-
-    //   var ResetPassword = function (tel) {
-    //         // 判断手机号是否存在
-    //     UserService.GetUserByPhoneNo(tel).then(function (data) {
-    //             // 转换成 json
-
-    //       data = data.toJSON()
-    //       var t = ''
-    //       for (i in data) {
-    //         t = t + data[i]
-    //       }
-    //       data = t
-
-    //       if (data == null) {
-    //         $scope.validStatus = '不存在该用户'
-    //       } else if (uid_valid.test(data)) {
-    //         Storage.set('UID', data)
-    //         UserService.SetUID(data)
-    //         UserService.SetPhenoNo(tel)
-    //         $scope.validStatus = '已发送验证'
-    //       }
-    //     })
-    //   }
-
-    //   $scope.SendMSM = function (tel) {
-    //     if ($scope.if_disabled) return
-
-    //     var phonev = /^1(3|4|5|7|8)\d{9}$/
-    //     if (!phonev.test(tel)) {
-    //       $scope.check = '请输入正确手机号'
-    //       return
-    //     }
-
-    //     if (Storage.get('setPasswordState') == 'register') {
-    //       RegisterNewUser(tel)
-    //     } else {
-    //       ResetPassword(tel)
-    //     }
-    //     $scope.if_disabled = true
-
-    //         // 倒计时60s
-    //     $timeout(function () {
-    //       $scope.validStatus = '点击发送验证码'
-    //       $scope.if_disabled = false
-    //     }, 60000)
-    //     var second = 60
-    //     timePromise = undefined
-
-    //     timePromise = $interval(function () {
-    //       if (second <= 0) {
-    //         $interval.cancel(timePromise)
-    //         timePromise = undefined
-    //         second = 60
-    //         $scope.validStatus = '重发验证码'
-    //       } else {
-    //         $scope.validStatus = String(second) + '秒后再发送'
-    //         second--
-    //       }
-    //     }, 1000, 100)
-    //   }
-
-    //   $scope.validNext = function (number) {
-    //     var phonev = /^1(3|4|5|7|8)\d{9}$/
-    //     if (!phonev.test(number)) {
-    //       $scope.check = '请输入正确手机号'
-    //       return
-    //     }
-
-    //     var validNumberReg = /^\d{6}$/
-    //     if (!validNumberReg.test($scope.validnumber)) {
-    //       $scope.check = '请输入正确验证码'
-    //       return
-    //     }
-
-    //         // 调web Service 判断验证码正不正确
-
-    //     switch (Storage.get('setPasswordState')) {
-    //       case 'register':
-    //         $state.go('register')
-    //         break
-    //       case 'reset':
-    //         $state.go('setPassword')
-    //     }
-    //   }
-
-    //   $scope.onClickCancel = function () {
-    //     Storage.rm('UID')
-    //     $state.go('login')
-    //   }
-    // }])
-
-    // .controller('RegisterCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', function (UserService, $scope, $state, Storage, $timeout) {
-    //   $scope.registerInfo = {
-    //     uid: UserService.GetUID(),
-    //     username: '',
-    //     id: '',
-    //     password: '',
-    //     password_rep: '',
-    //     role: ''
-    //   }
-
-    //   $scope.status = ''
-
-    //   $scope.onClickReg = function (registerInfo) {
-    //     if (registerInfo.role == '') {
-    //       $scope.status = '请选角色'
-    //     }
-
-    //     if (registerInfo.password != registerInfo.password) {
-    //       $scope.status = '两次密码不同'
-    //     }
-
-    //     registerInfo.role = registerInfo.role[0]
-    //     console.log(registerInfo.role)
-    //     console.log(registerInfo)
-
-    //     UserService.RegisterUser(registerInfo).then(function (data) {
-    //       console.log(data)
-    //       if (data.result == '注册成功') {
-    //         $timeout(function () { $state.go('main.data.sampling') }, 500)
-    //         $scope.status = '注册成功'
-    //       } else {
-    //         $scope.status = '注册失败'
-    //       }
-    //     })
-    //   }
-    // }])
-
-    // .controller('SetPasswordCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', function (UserService, $scope, $state, Storage, $timeout) {
-    //   $scope.Input = {
-    //     password: '',
-    //     password2: '',
-    //     password_old: ''
-    //   }
-
-    //   $scope.status = ''
-
-    //   $scope.onClickCancel = function () {
-    //     Storage.rm('UID')
-    //     $state.go('login')
-    //   }
-
-    //   $scope.onClickConfirm = function (Input) {
-    //     if (Input.password != Input.password2) {
-    //       $scope.status = '两次密码不同'
-    //       return
-    //     }
-
-    //         // console.log(Storage.get("UID"));
-    //         // infoIndex = ["UserId","Identify","PhoneNo","UserName","Role"];
-    //         // UserService.GetUserInfo(infoIndex).then(function(data){
-    //         // console.log(Storage.get("UID"));
-
-    //         // if(data == null) {
-    //         //     $scope.status = "修改失败，请重试";
-    //         //     return;
-    //         // }
-
-    //         // data = data.toJSON();
-    //         // var t = "";
-    //         // for(i in data){
-    //         //     t = t + data[i];
-    //         // }
-    //         // data = t;
-    //         //
-    //         // data = data.split('|');
-    //         // console.log(data);
-    //         // registerInfo = {
-    //         //     uid:UserService.GetUID(),
-    //         //     username:data[2],
-    //         //     id:data[0],
-    //         //     password:Input.password,
-    //         //     role:data[3]
-    //         // };
-
-    //         // UserService.RegisterUser(registerInfo).then(function(data){
-    //         //     // console.log(data);
-    //         //     if(data.result == "注册成功"){
-    //         //         $timeout(function(){$state.go('main.data');} , 500);
-    //         //         $scope.status = "修改成功";
-    //         //     }
-    //         //     else{
-    //         //         $scope.status = "修改失败";
-    //         //     }
-    //         // });
-    //         // console.log(data);
-    //         // Input.password_old = data[4];
-
-    //     UserService.ChangePassword(Input, 1).then(function (res) {
-    //       if (res.result == '修改成功') {
-    //         $timeout(function () { $state.go('main.data.sampling') }, 500)
-    //       } else {
-
-    //       }
-    //             // if(res){
-    //             //     $timeout(function(){$state.go('main.data');} , 500);
-    //             // }
-    //     })
-    //   }
-    // }])
-
-    // .controller('ChangePasswordCtrl', ['UserService', '$scope', '$state', 'Storage', '$timeout', function (UserService, $scope, $state, Storage, $timeout) {
-    //   $scope.Input = {
-    //     password: '',
-    //     password2: '',
-    //     password_old: ''
-    //   }
-
-    //   $scope.status = ''
-
-    //   $scope.onClickConfirm = function (Input) {
-    //     if (Input.password != Input.password2) {
-    //       $scope.status = '两次新密码不同'
-    //       return
-    //     }
-
-    //     UserService.ChangePassword(Input, 0).then(function (res) {
-    //       if (res.result == '修改成功') {
-    //         $scope.status = '修改成功'
-    //         $timeout(function () { $state.go('login') }, 500)
-    //       } else {
-    //         $scope.status = '修改失败'
-    //       }
-    //     })
-    //   }
-
-    //   $scope.back = function () {
-    //     $state.go('main.data.sampling')
-    //   }
-    // }])
 
     .controller('outputCtrl', [ '$scope', '$state', 'Storage', '$timeout', function ($scope, $state, Storage, $timeout) {
       // SocketService.on('message', function (data) {

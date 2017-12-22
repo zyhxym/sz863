@@ -17,12 +17,7 @@ angular.module('IntelligentDetector', ['ui.router', 'controllers', 'services', '
                   templateUrl: 'templates/login.html',
                   controller: 'LoginCtrl'
                 })
-                // 注册
-                .state('register', {
-                  url: '/register',
-                  templateUrl: 'templates/register.html',
-                  controller: 'RegisterCtrl'
-                })
+
                 // 主页面
                 .state('main', {
                   url: '/main',
@@ -44,22 +39,6 @@ angular.module('IntelligentDetector', ['ui.router', 'controllers', 'services', '
                   url: '/input',
                   templateUrl: 'templates/monitors/input.html',
                   controller: 'inputCtrl'
-                })
-                // 设置
-                .state('setPassword', {
-                  url: '/setPassword',
-                  templateUrl: 'templates/settings/setPassword.html',
-                  controller: 'SetPasswordCtrl'
-                })
-                .state('changePassword', {
-                  url: '/changePassword',
-                  templateUrl: 'templates/settings/changePassword.html',
-                  controller: 'ChangePasswordCtrl'
-                })
-                .state('phoneValid', {
-                  url: '/phoneValid',
-                  templateUrl: 'templates/settings/phoneValid.html',
-                  controller: 'phoneValidCtrl'
                 })
                 .state('userDetail', {
                   url: '/userDetail',

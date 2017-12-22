@@ -31,29 +31,33 @@
     .factory('Data', ['$resource', '$q', '$interval', 'CONFIG', 'Storage', function ($resource, $q, $interval, CONFIG, Storage) {
       var serve = {}
       var abort = $q.defer
-      // 本体录入
+      // 本体
       var Ontology = function () {
         return $resource(CONFIG.baseUrl + ':path/:route', {
           path: 'OntRead'
         }, {
-          readONT: { method: 'POST', params: { route: 'readModel' }, timeout: 10000 },
+            // 录入本体
+          readONT: { method: 'POST', params: { route: 'readModel', url: '@url', model: '@model'}, timeout: 10000 },
+          // 验证之前录入是否超过时限
           validateONT: { method: 'GET', params: { route: 'validModel' }, timeout: 10000 }
 
         })
       }
-
-        // 检测结果-张桠童
-      var Result = function () {
-        return $resource(CONFIG.baseUrl + ':path/:route', { path: 'Result' }, {
-          GetTestResultInfo: { method: 'POST', params: { route: 'ResTestResultGetResultInfosByAnyProperty' }, timeout: 10000, isArray: true },
-          GetBreakDowns: { method: 'POST', params: { route: 'BreakDownGetBreakDownsByAnyProperty' }, timeout: 10000, isArray: true }
+      // 诊断
+      var Diagnosis = function () {
+        return $resource(CONFIG.baseUrl + ':path/:route', { path: 'Evaluation' }, {
+            // 风险因子
+          riskFactor: { method: 'GET', params: { route: 'RiskFactor', guid: '@guid' }, timeout: 1000 }
 
         })
       }
-        // 仪器信息-张桠童
-      var Operation = function () {
-        return $resource(CONFIG.baseUrl + ':path/:route', { path: 'Operation' }, {
-          GetEquipmentOps: { method: 'POST', params: { route: 'OpEquipmentGetEquipmentOpsByAnyProperty' }, timeout: 10000, isArray: true }
+
+        // 评估结果
+        // {guid:P000125}
+      var Evaluation = function () {
+        return $resource(CONFIG.baseUrl + ':path/:route', { path: 'Diagnose' }, {
+          evaluateScore: { method: 'GET', params: { route: 'CGEvalutaion', guid: '@guid', flag: 1 }, timeout: 1000 }
+
         })
       }
 
@@ -63,16 +67,12 @@
           abort = $q.defer()
 
           serve.Ontology = Ontology()
-          // serve.ItemInfo = ItemInfo()
-          serve.Result = Result()
-          serve.Operation = Operation()
+          serve.Evaluation = Evaluation()
         }, 0, 1)
       }
 
       serve.Ontology = Ontology()
-      // serve.ItemInfo = ItemInfo()
-      serve.Result = Result()
-      serve.Operation = Operation()
+      serve.Evaluation = Evaluation()
       return serve
     }])
 
@@ -82,7 +82,7 @@
         // 获取检测结果信息表
       self.readONT = function (obj) {
         var deferred = $q.defer()
-        Data.Ontology.readONT(obj, function (data, headers) {
+        Data.Ontology.readONT({url: CONFIG.localUrl, model: CONFIG.model}, function (data, headers) {
           deferred.resolve(data)
         }, function (err) {
           deferred.reject(err)
@@ -102,38 +102,12 @@
       return self
     }])
 
-    // 获取检测结果--张桠童
-    .factory('Result', ['$http', '$q', 'Storage', 'Data', function ($http, $q, Storage, Data) {
+    // 评估结果
+    .factory('Evaluation', ['$http', '$q', 'Storage', 'Data', function ($http, $q, Storage, Data) {
       var self = this
-        // 获取检测结果信息表
-      self.GetTestResultInfo = function (obj) {
+      self.evaluateScore = function (obj) {
         var deferred = $q.defer()
-        Data.Result.GetTestResultInfo(obj, function (data, headers) {
-          deferred.resolve(data)
-        }, function (err) {
-          deferred.reject(err)
-        })
-        return deferred.promise
-      }
-      self.GetBreakDowns = function (obj) {
-        var deferred = $q.defer()
-        Data.Result.GetBreakDowns(obj, function (data, headers) {
-          deferred.resolve(data)
-        }, function (err) {
-          deferred.reject(err)
-        })
-        return deferred.promise
-      }
-      return self
-    }])
-
-    // 获取仪器信息--张桠童
-    .factory('Operation', ['$http', '$q', 'Storage', 'Data', function ($http, $q, Storage, Data) {
-      var self = this
-        // 获取检测结果信息表
-      self.GetEquipmentOps = function (obj) {
-        var deferred = $q.defer()
-        Data.Operation.GetEquipmentOps(obj, function (data, headers) {
+        Data.Evaluation.evaluateScore(obj, function (data, headers) {
           deferred.resolve(data)
         }, function (err) {
           deferred.reject(err)
