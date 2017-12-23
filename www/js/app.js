@@ -10,10 +10,12 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
             $stateProvider
                 // 登录
                 .state('login', {
-                    url: '/login',
-                    templateUrl: 'templates/login.html',
-                    controller: 'LoginCtrl'
+                  url: '/login',
+                  templateUrl: 'templates/login.html',
+                  controller: 'LoginCtrl'
                 })
+
+
                 // 主页面
                 .state('main', {
                     url: '/main',
@@ -41,6 +43,7 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
                     templateUrl: 'templates/monitors/inspection.html',
                     controller: 'inspectionCtrl'
                 })
+
                 .state('main.monitors.risk', {
                     url: '/risk',
                     templateUrl: 'templates/monitors/risk.html',
