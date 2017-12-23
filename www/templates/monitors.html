@@ -1,18 +1,41 @@
-<div class="tab-pane fade in active" id="monitors">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-1" role="navigation">
-        <ul id="mypills2" class="nav nav-pills nav-stacked" style="text-align: center;font-size: 15px">
-          <li><a href="#input" data-toggle="pill">输入</a></li>
-          <li><a href="#output" data-toggle="pill">输出</a></li>
-        </ul>
-      </div>
-      <div class="col-xs-10">
-      	<div ui-view></div>
-      </div>
-    </div>  
-  </div>
+<!-- <div class="tab-pane fade in active" id="monitors">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-1" role="navigation">
+                <ul id="mypills2" class="nav nav-pills nav-stacked" style="text-align: center;font-size: 15px">
+                    <li><a href="#input" data-toggle="pill">输入</a></li>
+                    <li><a href="#inspection" data-toggle="pill">检查</a></li>
+                    <li><a href="#risk" data-toggle="pill">风险</a></li>
+                    <li><a href="#medicine" data-toggle="pill">用药</a></li>
+                    <li><a href="#life" data-toggle="pill">生活建议</a></li>
+                    <li><a href="#assess" data-toggle="pill">评估</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-11">
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-  $('#mypills2 a[href="#input"]').tab('show');
-</script>
+$('#mypills2 a[href="#input"]').tab('show');
+</script> -->
+<div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-2" style="text-align: center;font-size: 15px;margin-top: 10px;margin-left: 10px;width:auto;">
+                <uib-tabset active="activePill" vertical="true" type="pills">
+                    <uib-tab index="0" heading="检查" select="toinspection()"></uib-tab>
+                    <uib-tab index="1" heading="风险" select="torisk()"></uib-tab>
+                    <uib-tab index="2" heading="用药建议" select="tomedicine()"></uib-tab>
+                    <uib-tab index="3" heading="生活建议" select="tolife()"></uib-tab>
+                    <uib-tab index="4" heading="指标评估" select="toassess()"></uib-tab>
+                </uib-tabset>
+            </div>
+            <div class="col-xs-10" style="margin-top:30px;">
+                <div ui-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
