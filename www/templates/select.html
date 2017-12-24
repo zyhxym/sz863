@@ -1,37 +1,25 @@
 <div class="tab-pane fade in active">
-    <div style="margin-top: 50px;margin-left: 50px">
-        <div class="col-md-3" >
+    
+    <!-- <div style="margin-top: 50px;margin-left: 20%">
+        <div class="col-md-4" >
             <div class="col-md-12 btn btn-warning text-center " style="text-decoration: none;background-color: #708090;border-color:#708090;min-height:170px" ng-click="toinput()" ><span style="font-size: 50px;padding-top: 25px" class="glyphicon glyphicon-upload"></span> <p style="font-size: 30px;padding-top: 5px" >创建用户</p></div>
         </div>
-        <div class="col-md-3" >
+        <div class="col-md-4" >
             <div class="col-md-12 btn btn-warning text-center " style="text-decoration: none;background-color: #347ab6;border-color:#347ab6;min-height:170px "	ng-click="touserlist()"><span style="font-size: 50px;padding-top: 25px " class=" glyphicon glyphicon-user"></span> <p style="font-size: 30px;padding-top: 5px " >查看现有用户</p></div>
         </div>
-    </div>
+    </div> -->
     <!-- 已有用户列表modal -->
-    <div class="modal fade" id="userlist" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" ng-click="modal_close('#userlist')">&times;</button>
-                    <h3 class="modal-title" id="modal-title">现有用户列表</h3>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    <table ng-table="scoredetail" class="table table-condensed table-bordered table-striped" style="margin-top: 10px;">
-                        <tr ng-repeat="c in userlist" style="text-align: center;">
-                            <td title="'患者姓名'">{{c.patientname}}
-                            </td>
-                            <td title="'患者id'">{{c.patientid}}
-                            </td>
-                            <td title="'操作'">
-                                <button class="btn btn-link" style="text-decoration:none; outline:none; padding:0px; border:0px; font-size:10px;" ng-click="touserdetail(c.patientid)">查看用户详情</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-warning" type="button" ng-click="modal_close('#userlist')">关闭</button>
-                </div>
-            </div>
-        </div>
-    </div>
+   
+    <table ng-table="scoredetail" class="table table-condensed table-bordered table-striped" style="margin-top: 10px;font-size:15px">
+        <tr ng-repeat="c in userlist" style="text-align: center;">
+            <td title="'患者姓名'">{{c.patientname}}
+            </td>
+            <td title="'患者id'">{{c.patientid}}
+            </td>
+            <td title="'操作'">
+                <button class="btn btn-link" style="text-decoration:none; outline:none; padding:0px; border:0px;font-weight: bold; " ng-click="toUserDetail(c.patientid)">选择</button>
+            </td>
+        </tr>
+    </table>
+       
 </div>

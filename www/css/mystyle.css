@@ -1,12 +1,4 @@
-:root{
-  --dark--blue:#38527b;
-  --my--text:#596472;
-  --dark-gray:#9da2a9;
-  --my--blue:#50abf0;
-  --my-orange:#fe824c;
-  --my-purple:#c659ff;
 
-}
 /* 37-Circular: */
 .circular {
   background: #EBEBE9;
@@ -179,3 +171,5 @@ nav a {
     transform: rotateY(180deg); } }
 
 /*# sourceMappingURL=mystyle.css.map */
+
+
