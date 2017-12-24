@@ -1,6 +1,6 @@
 ﻿angular.module('controllers', ['ngResource', 'services'])
 
-    .controller('LoginCtrl', [ '$scope', '$state', 'Storage', '$timeout', 'Ontology', 'Evaluation', function ($scope, $state, Storage, $timeout, Ontology, Evaluation) {
+    .controller('LoginCtrl', [ '$scope', '$state', 'Storage', 'Ontology', function ($scope, $state, Storage, Ontology) {
         // 捆绑变量
       $scope.logStatus = '   '
 
@@ -37,13 +37,16 @@
         if (user) {
             // 可能是管理员 也可能是 医生
           $scope.logStatus = '恭喜您！登录成功。'
-          // 录入本体
 
           if (login.role === 'doctor') {
             Storage.set('currentUser', user)
             // currentUser记录当前登录用户
+
             Ontology.readONT().then(function (data) {
-              $state.go('main.select')
+              // 本体读入
+              if (data.flag === 1) {
+                $state.go('main.select')
+              }
             })
           } else {
 
@@ -92,8 +95,8 @@
 
     }])
 
-    .controller('MainCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('MainCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
         $scope.createPats = function () {
           $state.go('main.input')
         }
@@ -104,8 +107,8 @@
     ])
 
     // 主菜单栏
-    .controller('MonitorsCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('MonitorsCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
         $scope.toinspection = function () {
           $state.go('monitors.inspection')
         }
@@ -124,8 +127,8 @@
       }
     ])
 
-    .controller('inputCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('inputCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
         $scope.accept = function () {
           console.log('确认了')
           $state.go('monitors.inspection')
@@ -136,34 +139,34 @@
       }
     ])
 
-    .controller('inspectionCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('inspectionCtrl', ['$scope', 'Storage', '$state', 'ExamRecommended',
+      function ($scope, Storage, $state, ExamRecommended) {
+        ExamRecommended.getExamRec(Storage.get('currentPatient'))
+      }
+    ])
+    .controller('riskCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
 
       }
     ])
-    .controller('riskCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('medicineCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
 
       }
     ])
-    .controller('medicineCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('lifeCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
 
       }
     ])
-    .controller('lifeCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
-
-      }
-    ])
-    .controller('assessCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('assessCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
 
       }
     ])
 
-    .controller('selectCtrl', ['$scope', 'CONFIG', 'Storage', 'Data', '$state',
-      function ($scope, CONFIG, Storage, Data, $state) {
+    .controller('selectCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
+      function ($scope, Storage, Data, $state, riskToONT) {
         $scope.userlist = [
           {
             patientname: '张三',
@@ -173,8 +176,11 @@
             patientname: '李四',
             patientid: 'P000121'
           }]
+
         $scope.toUserDetail = function (ID) {
           Storage.set('currentPatient', ID)
+          riskToONT.normalRisk(ID)
+          riskToONT.stateRisk(ID)
           // currentPatient记录当前选择的患者
           $state.go('monitors.inspection')
         }
