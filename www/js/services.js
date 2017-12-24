@@ -39,7 +39,17 @@
             // 录入本体
           readONT: { method: 'POST', params: { route: 'readModel', url: '@url', model: '@model', flag: 1}, timeout: 10000 },
           // 验证之前录入是否超过时限
-          validateONT: { method: 'GET', params: { route: 'validModel' }, timeout: 10000 }
+          validateONT: { method: 'GET', params: { route: 'validModel', flag: 1 }, timeout: 10000 }
+
+        })
+      }
+      // 输入回本体
+      var InfoInput = function () {
+        return $resource(CONFIG.baseUrl + ':path/:route', {
+          path: 'InfoInput'
+        }, {
+            // 向患者输入数据属性，即添加患者信息,输入：string guid, string value, string property
+          addPatProperty: { method: 'POST', params: { route: 'addObjProperty', guid: '@guid' }, timeout: 10000 }
 
         })
       }
@@ -50,7 +60,7 @@
           riskFactor: { method: 'GET', params: { route: 'RiskFactor', guid: '@guid' }, timeout: 1000 },
           // 输出需要调用AddObjProperty输入回本体:防控疾病、生理状态
           // 分析患者需要防控的疾病，不做展示，但需要作为输入添加到患者属性中，即返回结果需要调用addObjProperty方法输入给患者。
-          riskDiagnosis: { method: 'GET', params: { route: 'disrisk', guid: '@guid' }, timeout: 1000 },
+          riskDiagnosis: { method: 'GET', params: { route: 'RiskDiagnosis', guid: '@guid' }, timeout: 1000 },
           // 推断患者个人生理状态，不做展示，但需要作为输入添加到患者属性中，即返回结果需要调用addObjProperty方法输入给患者。
           state: { method: 'GET', params: { route: 'state', guid: '@guid' }, timeout: 1000 }
 
@@ -62,7 +72,7 @@
             // 推理分析患者需要参与的医学检查，医学检查为检查组合名称，需要调用ExamInfo方法显示具体的检查项目。
           examRecommend: { method: 'GET', params: { route: 'ExamRecGen', guid: '@guid' }, timeout: 1000 },
           // 显示具体的医学检查项目，对接ExamRecGen方法。通过ExamRecGen方法得到的检查组，输入到ExamInfo方法中，得出患者具体需要参加的医学检查项目，结果分类显示。
-          examInfo: { method: 'POST', params: { route: 'ExamInfo '}, timeout: 1000 },
+          // examInfo: { method: 'POST', params: { route: 'ExamInfo ', list: '@list'}, timeout: 1000 },
           // 推理分析患者需要参与的疾病筛查，筛查为检查组合名称，需要调用ScreenInfo方法显示具体的检查项目。
           screenRecommend: { method: 'GET', params: { route: 'ScreenRecGen ', guid: '@guid'}, timeout: 1000 },
           // 显示具体的筛查所需检查项目，注意事项，和筛查周期，对接ScreenRecGen方法。通过ScreenRecGen方法得到筛查组，输入到ScreenInfo方法中，得出患者具体需要参加的检查项目、注意事项，以及筛查周期。
@@ -107,6 +117,7 @@
           abort = $q.defer()
 
           serve.Ontology = Ontology()
+          serve.InfoInput = InfoInput()
           serve.Diagnosis = Diagnosis()
           serve.ExamRecommended = ExamRecommended()
           serve.MedicationRec = MedicationRec()
@@ -117,6 +128,7 @@
       }
 
       serve.Ontology = Ontology()
+      serve.InfoInput = InfoInput()
       serve.Diagnosis = Diagnosis()
       serve.ExamRecommended = ExamRecommended()
       serve.MedicationRec = MedicationRec()
@@ -126,11 +138,10 @@
       return serve
     }])
 
-        // 获取仪器信息--张桠童
+        // 录入本体
     .factory('Ontology', ['$http', '$q', 'CONFIG', 'Data', function ($http, $q, CONFIG, Data) {
       var self = this
-        // 获取检测结果信息表
-      self.readONT = function (obj) {
+      self.readONT = function () {
         var deferred = $q.defer()
         Data.Ontology.readONT({url: CONFIG.localUrl, model: CONFIG.model}, function (data, headers) {
           deferred.resolve(data)
@@ -149,6 +160,21 @@
         })
         return deferred.promise
       }
+      return self
+    }])
+
+    .factory('InfoInput', ['$http', '$q', 'CONFIG', 'Data', function ($http, $q, CONFIG, Data) {
+      var self = this
+      self.addPatProperty = function (obj) {
+        var deferred = $q.defer()
+        Data.InfoInput.addPatProperty(obj, function (data, headers) {
+          deferred.resolve(data)
+        }, function (err) {
+          deferred.reject(err)
+        })
+        return deferred.promise
+      }
+
       return self
     }])
 
@@ -187,10 +213,10 @@
     }])
 
     // 检查建议
-    .factory('ExamRecommended', ['$http', '$q', 'Data', function ($http, $q, Data) {
+    .factory('ExamRecommended', ['$http', '$q', 'Data', 'CONFIG', function ($http, $q, Data, CONFIG) {
       var self = this
       // {guid:P000125}
-      self.examRecommend = function (obj) {
+      var examRecommend = function (obj) {
         var deferred = $q.defer()
         Data.ExamRecommended.examRecommend(obj, function (data, headers) {
           deferred.resolve(data)
@@ -199,16 +225,16 @@
         })
         return deferred.promise
       }
-      self.examInfo = function (obj) {
-        var deferred = $q.defer()
-        Data.ExamRecommended.examInfo(obj, function (data, headers) {
-          deferred.resolve(data)
-        }, function (err) {
-          deferred.reject(err)
-        })
-        return deferred.promise
-      }
-      self.screenRecommend = function (obj) {
+      // var examInfo = function (obj) {
+      //   var deferred = $q.defer()
+      //   Data.ExamRecommended.examInfo(obj, function (data, headers) {
+      //     deferred.resolve(data)
+      //   }, function (err) {
+      //     deferred.reject(err)
+      //   })
+      //   return deferred.promise
+      // }
+      var screenRecommend = function (obj) {
         var deferred = $q.defer()
         Data.ExamRecommended.screenRecommend(obj, function (data, headers) {
           deferred.resolve(data)
@@ -217,7 +243,7 @@
         })
         return deferred.promise
       }
-      self.screenInfo = function (obj) {
+      var screenInfo = function (obj) {
         var deferred = $q.defer()
         Data.ExamRecommended.screenInfo(obj, function (data, headers) {
           deferred.resolve(data)
@@ -225,6 +251,23 @@
           deferred.reject(err)
         })
         return deferred.promise
+      }
+      // 将examRecommend和examInfo对接
+      self.getExamRec = function (guid) {
+        var deferred = $q.defer()
+        examRecommend({guid: guid}).then(function (data) {
+          var examGroups = data.ExamRec
+          $.ajax({
+            url: CONFIG.baseUrl + 'ExamRec/ExamInfo',
+            type: 'POST',
+            data: data.ExamRecNode,
+            dataType: 'json',
+            success: function (data) {
+              console.log(data)
+              // 卡住了
+            }
+          })
+        })
       }
       return self
     }])
@@ -299,6 +342,40 @@
           deferred.reject(err)
         })
         return deferred.promise
+      }
+      return self
+    }])
+
+    // 查询诊断结果并输入本体
+    .factory('riskToONT', ['Diagnosis', 'InfoInput', function (Diagnosis, InfoInput) {
+      var self = this
+      self.normalRisk = function (guid) {
+        Diagnosis.riskDiagnosis({guid: guid}).then(function (data) {
+          if (data.flag === 1) {
+            var proList = [], valueList = []
+            data.DisRisk.forEach(function (value) {
+              proList.push('P_hasRisk_Normal')
+              valueList.push(value)
+            })
+            InfoInput.addPatProperty({guid: guid, property: proList, value: valueList}).then(function (res) {
+              // console.log(res)
+            })
+          }
+        })
+      }
+      self.stateRisk = function (guid) {
+        Diagnosis.state({guid: guid}).then(function (data) {
+          if (data.flag === 1) {
+            var proList = [], valueList = []
+            data.State.forEach(function (value) {
+              proList.push('P_hasGeneralBodyStateFinding')
+              valueList.push(value)
+            })
+            InfoInput.addPatProperty({guid: guid, property: proList, value: valueList}).then(function (res) {
+              // console.log(res)
+            })
+          }
+        })
       }
       return self
     }])
