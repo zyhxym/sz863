@@ -19,7 +19,8 @@
 
     .constant('CONFIG', {
       baseUrl: 'http://localhost:1420/api/', // RESTful 服务器
-      localUrl: 'E:/1实验室/9 深圳863项目结题/深圳863—知识库/OWL and Rules/',
+      // localUrl: 'E:/1实验室/9 深圳863项目结题/深圳863—知识库/OWL and Rules/',
+      localUrl:'/Users/ruh/Desktop/319/863/深圳863—知识库/OWL and Rules',
       model: 'RMDK v1.2.owl'
 
         /* List all the roles you wish to use in the app
