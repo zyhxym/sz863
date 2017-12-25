@@ -40,6 +40,7 @@
 
           if (login.role === 'doctor') {
             Storage.set('currentUser', user)
+            console.log(user)
             // currentUser记录当前登录用户
 
             Ontology.readONT().then(function (data) {
@@ -95,6 +96,8 @@
 
     .controller('MainCtrl', ['$scope', 'Storage', 'Data', '$state',
       function ($scope, Storage, Data, $state) {
+        $scope.username=Storage.get('currentUser')
+
         $scope.createPats = function () {
           $state.go('main.input')
         }
