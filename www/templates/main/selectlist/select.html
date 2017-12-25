@@ -1,0 +1,11 @@
+    <table ng-table="scoredetail" class="table table-condensed table-bordered table-striped" style="margin-top: 10px;font-size:15px">
+        <tr ng-repeat="c in userlist" style="text-align: center;">
+            <td title="'患者姓名'">{{c.patientname}}
+            </td>
+            <td title="'患者id'">{{c.patientid}}
+            </td>
+            <td title="'操作'">
+                <button class="btn btn-link" style="text-decoration:none; outline:none; padding:0px; border:0px;font-weight: bold; " ng-click="toUserDetail(c.patientid)">选择</button>
+            </td>
+        </tr>
+    </table>

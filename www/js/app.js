@@ -20,47 +20,52 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
                   templateUrl: 'templates/main.html',
                   controller: 'MainCtrl'
                 })
-                .state('main.select', {
+                .state('main.selectlist', {
+                  url: '/selectlist',
+                  templateUrl: 'templates/main/selectlist.html',
+                  controller: 'selectlistCtrl'
+                })
+                .state('main.selectlist.select', {
                   url: '/select',
-                  templateUrl: 'templates/select.html',
+                  templateUrl: 'templates/main/selectlist/select.html',
                   controller: 'selectCtrl'
                 })
 
-                .state('main.input', {
+                .state('main.selectlist.input', {
                   url: '/input',
-                  templateUrl: 'templates/input.html',
+                  templateUrl: 'templates/main/selectlist/input.html',
                   controller: 'inputCtrl'
                 })
-                .state('monitors', {
+                .state('main.monitors', {
                   url: '/monitors',
-                  templateUrl: 'templates/monitors.html',
+                  templateUrl: 'templates/main/monitors.html',
                   controller: 'MonitorsCtrl'
                 })
 
-                .state('monitors.inspection', {
+                .state('main.monitors.inspection', {
                   url: '/inspection',
-                  templateUrl: 'templates/monitors/inspection.html',
+                  templateUrl: 'templates/main/monitors/inspection.html',
                   controller: 'inspectionCtrl'
                 })
 
-                .state('monitors.risk', {
+                .state('main.monitors.risk', {
                   url: '/risk',
-                  templateUrl: 'templates/monitors/risk.html',
+                  templateUrl: 'templates/main/monitors/risk.html',
                   controller: 'riskCtrl'
                 })
-                .state('monitors.medicine', {
+                .state('main.monitors.medicine', {
                   url: '/medicine',
-                  templateUrl: 'templates/monitors/medicine.html',
+                  templateUrl: 'templates/main/monitors/medicine.html',
                   controller: 'medicineCtrl'
                 })
-                .state('monitors.life', {
+                .state('main.monitors.life', {
                   url: '/life',
-                  templateUrl: 'templates/monitors/life.html',
+                  templateUrl: 'templates/main/monitors/life.html',
                   controller: 'lifeCtrl'
                 })
-                .state('monitors.assess', {
+                .state('main.monitors.assess', {
                   url: '/assess',
-                  templateUrl: 'templates/monitors/assess.html',
+                  templateUrl: 'templates/main/monitors/assess.html',
                   controller: 'assessCtrl'
                 })
       }

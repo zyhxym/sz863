@@ -40,14 +40,14 @@
 
           if (login.role === 'doctor') {
             Storage.set('currentUser', user)
+            Storage.set('currentrole', login.role)
+
             console.log(user)
             // currentUser记录当前登录用户
 
             Ontology.readONT().then(function (data) {
               // 本体读入
-              if (data.flag === 1) {
-                $state.go('main.select')
-              }
+                $state.go('main.selectlist')
             })
           } else {
 
@@ -98,14 +98,10 @@
 
     .controller('MainCtrl', ['$scope', 'Storage', 'Data', '$state',
       function ($scope, Storage, Data, $state) {
-        $scope.username=Storage.get('currentUser')
+        $scope.UserName=Storage.get('currentUser')
+        $scope.Role=Storage.get('currentrole')
+        
 
-        $scope.createPats = function () {
-          $state.go('main.input')
-        }
-        $scope.currentPats = function () {
-          $state.go('main.select')
-        }
       }
     ])
 
@@ -113,19 +109,19 @@
     .controller('MonitorsCtrl', ['$scope', 'Storage', 'Data', '$state',
       function ($scope, Storage, Data, $state) {
         $scope.toinspection = function () {
-          $state.go('monitors.inspection')
+          $state.go('main.monitors.inspection')
         }
         $scope.torisk = function () {
-          $state.go('monitors.risk')
+          $state.go('main.monitors.risk')
         }
         $scope.tomedicine = function () {
-          $state.go('monitors.medicine')
+          $state.go('main.monitors.medicine')
         }
         $scope.tolife = function () {
-          $state.go('monitors.life')
+          $state.go('main.monitors.life')
         }
         $scope.toassess = function () {
-          $state.go('monitors.assess')
+          $state.go('main.monitors.assess')
         }
       }
     ])
@@ -134,7 +130,7 @@
       function ($scope, Storage, Data, $state) {
         $scope.accept = function () {
           console.log('确认了')
-          $state.go('monitors.inspection')
+          $state.go('main.monitors.inspection')
         }
         $scope.cancel = function () {
           $scope.textInfo = {}
@@ -182,10 +178,23 @@
 
         $scope.toUserDetail = function (ID) {
           Storage.set('currentPatient', ID)
-          riskToONT.normalRisk(ID)
-          riskToONT.stateRisk(ID)
+          // riskToONT.normalRisk(ID)
+          // riskToONT.stateRisk(ID)
           // currentPatient记录当前选择的患者
-          $state.go('monitors.inspection')
+          $state.go('main.monitors.inspection')
+        }
+      }
+    ])
+
+
+    .controller('selectlistCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
+      function ($scope, Storage, Data, $state, riskToONT) {
+       
+        $scope.createPats = function () {
+          $state.go('main.selectlist.input')
+        }
+        $scope.currentPats = function () {
+          $state.go('main.selectlist.select')
         }
       }
     ])
