@@ -24,7 +24,7 @@
         User.set('kingsley', {password: 'kingsley,,,', role: 'administrator'})
         return function (logInfo) {
           var result = User.get(logInfo.name)
-          console.log(result)
+          // console.log(result)
           if (result) {
             return (result.password === logInfo.password && result.role === logInfo.role) ? logInfo.name : undefined
           }
@@ -40,14 +40,12 @@
 
           if (login.role === 'doctor') {
             Storage.set('currentUser', user)
-            Storage.set('currentrole', login.role)
-
             console.log(user)
             // currentUser记录当前登录用户
 
             Ontology.readONT().then(function (data) {
               // 本体读入
-                $state.go('main.selectlist')
+              $state.go('main.selectlist.select')
             })
           } else {
 
@@ -98,10 +96,7 @@
 
     .controller('MainCtrl', ['$scope', 'Storage', 'Data', '$state',
       function ($scope, Storage, Data, $state) {
-        $scope.UserName=Storage.get('currentUser')
-        $scope.Role=Storage.get('currentrole')
-        
-
+        $scope.username = Storage.get('currentUser')
       }
     ])
 
@@ -140,7 +135,10 @@
 
     .controller('inspectionCtrl', ['$scope', 'Storage', '$state', 'ExamRecommended',
       function ($scope, Storage, $state, ExamRecommended) {
-        ExamRecommended.getExamRec(Storage.get('currentPatient'))
+        ExamRecommended.getScreenRec(Storage.get('currentPatient')).then(function (data) {
+          // console.log(data)
+          $scope.screens = data
+        })
       }
     ])
     .controller('riskCtrl', ['$scope', 'Storage', 'Data', '$state',
@@ -148,8 +146,8 @@
 
       }
     ])
-    .controller('medicineCtrl', ['$scope', 'Storage', 'Data', '$state',
-      function ($scope, Storage, Data, $state) {
+    .controller('medicineCtrl', ['$scope', 'Storage', '$state',
+      function ($scope, Storage, $state) {
 
       }
     ])
@@ -158,9 +156,11 @@
 
       }
     ])
-    .controller('assessCtrl', ['$scope', 'Storage', 'Data', '$state',
-      function ($scope, Storage, Data, $state) {
-
+    .controller('assessCtrl', ['$scope', 'Storage', 'Evaluation', '$state',
+      function ($scope, Storage, Evaluation, $state) {
+        Evaluation.evaluateScore({guid: Storage.get('currentPatient')}).then(function (data) {
+          console.log(data)
+        })
       }
     ])
 
@@ -178,14 +178,14 @@
 
         $scope.toUserDetail = function (ID) {
           Storage.set('currentPatient', ID)
-          // riskToONT.normalRisk(ID)
-          // riskToONT.stateRisk(ID)
+          riskToONT.normalRisk(ID)
+          riskToONT.stateRisk(ID)
           // currentPatient记录当前选择的患者
           $state.go('main.monitors.inspection')
+
         }
       }
     ])
-
 
     .controller('selectlistCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
       function ($scope, Storage, Data, $state, riskToONT) {
