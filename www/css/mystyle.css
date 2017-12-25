@@ -172,4 +172,38 @@ nav a {
 
 /*# sourceMappingURL=mystyle.css.map */
 
+div.myCard {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  height: 600px;
+  margin:10px 20px 10px 20px;
+  padding: 10px 30px 10px 30px
+}
+h3.cardTitle{
+  color: #337ab7
+}
+h4.cardTitle{
+  color: #337ab7;
+  text-align: center;
+}
+h5.label{
+  font-size: 12px;
+  margin-top: 10px;
+  display: inline-block;
+}
+ol.must>li{
+  font-size: 12px;
+  /*font-weight: bold*/
+}
+ol.optional>li{
+  font-size: 12px
+}
+div.gridTex{
+  font-size: 14px;
+  line-height: 20px;
+}
+div.center{
+  text-align: center;
+}
+
 

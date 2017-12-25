@@ -5,17 +5,17 @@
                 <h3 class="panel-title">饮食建议</h3>
             </div>
             <div class="panel-body">
-                <h5 class="label label-success ng-binding">建议补充营养素：</h5>
+                <h5 class="label label-success ">建议补充营养素：</h5>
                 <p ng-repeat="DRec in dietrec.DRecName" style="margin-top: 10px;margin-left:10px">
                     {{DRec}}
                 </p>
                 <hr>
-                <h5 class="label label-danger ng-binding">不建议补充营养素：</h5>
+                <h5 class="label label-danger">不建议补充营养素：</h5>
                 <p ng-repeat="DUnRec in dietrec.DUnRecName" style="margin-top: 10px;margin-left:10px">
                     {{DUnRec}}
                 </p>
                 <hr>
-                <h5 class="label label-warning ng-binding">需控制摄入的营养素：</h5>
+                <h5 class="label label-warning">需控制摄入的营养素：</h5>
                 <p ng-repeat="DCtrl in dietrec.DCtrlName" style="margin-top: 10px;margin-left:10px">
                     {{DCtrl.ctrl}}，摄入上限：{{DCtrl.value}} {{DCtrl.unit}}
                 </p>
