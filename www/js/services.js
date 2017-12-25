@@ -86,7 +86,7 @@
           // 推理建议使用的药物。结果为药物在本体知识库中的名称，需要调用DrugInfo方法获得药物的具体信息。结果分类返回。
           drugsRec: { method: 'GET', params: { route: 'DrugProvider', guid: '@guid' }, timeout: 1000 },
           // 查询药物具体信息，包括名称、类型、用量、注意事项等，对接DrugProvider方法。需要将DrugProvider得到的DList、DListA和DListC输入到DrugInfo中，得到药物信息。
-          drugsInfo: { method: 'POST', params: { route: 'DrugInfo' }, timeout: 1000 }
+          drugsInfo: { method: 'GET', params: { route: 'DrugInfo' , DIn: '@DIn'}, timeout: 1000 }
 
         })
       }

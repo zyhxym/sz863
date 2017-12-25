@@ -1,5 +1,36 @@
-<div class="tab-pane fade in active">
-    <div style="padding-bottom: 30px">
-hi
+<div class="row">
+    <div class="col-sm-2">
     </div>
-  </div>
+    <div class="col-sm-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">风险因子</h3>
+            </div>
+            <div class="panel-body">
+                <h5 class="label label-warning ng-binding">糖尿病风险因素</h5>
+                <p ng-repeat="DiaName in risk.DiaName" style="margin-top: 10px;margin-left:10px">
+                    {{DiaName}}
+                </p>
+                <hr>
+                <h5 class="label label-warning ng-binding">卒中风险因素</h5>
+                <p ng-repeat="StrokeName in risk.StrokeName" style="margin-top: 10px;margin-left:10px">
+                    {{StrokeName}}
+                </p>
+                <hr>
+                <h5 class="label label-warning ng-binding">高血压风险因素</h5>
+                <p ng-repeat="HypName in risk.HypName" style="margin-top: 10px;margin-left:10px">
+                    {{HypName}}
+                </p>
+                <hr>
+                <h5 class="label label-warning ng-binding">心血管疾病风险因素</h5>
+                <p ng-repeat="CVDName in risk.CVDName" style="margin-top: 10px;margin-left:10px">
+                    {{CVDName}}
+                </p>
+                <hr>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+    </div>
+</div>

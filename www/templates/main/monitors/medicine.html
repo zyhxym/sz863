@@ -1,5 +1,63 @@
-<div class="tab-pane fade in active">
-    <div style="padding-bottom: 30px">
-hi
+<div class="row">
+    <div class="col-sm-1">
     </div>
-  </div>
+    <div class="col-sm-5" id="examRec">
+        <div class="myCard">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">适用药</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-repeat="drug in DList" style="font-size: 15px;line-height:25px">
+                        <button type="button" class="btn btn-link" ng-click="showinfo(1,$index)"> {{drug}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">过敏药物</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-repeat="drug in DListA" style="font-size: 15px;line-height:25px">
+                        <button type="button" class="btn btn-link" ng-click="showinfo(2,$index)"> {{drug}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">禁忌药物</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-repeat="drug in DListC" style="font-size: 15px;line-height:25px">
+                        <button type="button" class="btn btn-link" ng-click="showinfo(3,$index)"> {{drug}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5" id="screenRec">
+        <div class="myCard">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">药物具体信息</h3>
+                </div>
+                <div class="panel-body">
+                    <ul style="margin-top: 10px；font-size: 20px;line-height:25px" class="must">
+                        <li ng-if="info.Dname">药物名称：{{info.Dname}}</li>
+                        <li ng-if="info.Dtype">药物类型：{{info.Dtype}}</li>
+                        <li ng-if="info.Ddoup">剂量上限：{{info.Ddoup}} {{info.Dun}}</li>
+                        <li ng-if="info.Ddodn">剂量下限：{{info.Ddodn}} {{info.Dun}}</li>
+                        <li ng-if="info.Dtup">使用次数上限：{{info.Dtup}}</li>
+                        <li ng-if="info.Dtdn">使用次数下限：{{info.Dtdn}}</li>
+                        <li ng-if="info.Duse">使用说明：{{info.Duse}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1">
+    </div>
+</div>
