@@ -58,17 +58,24 @@
       }
     }])
 
-    .controller('MainCtrl', ['$scope', 'Storage', 'Data', '$state',
+    .controller('MainCtrl', ['$scope', 'Storage', '$state',
 
-      function ($scope, Storage, Data, $state) {
+      function ($scope, Storage, $state) {
         $scope.UserName = Storage.get('currentUser')
         $scope.Role = Storage.get('currentrole')
+        $scope.logout = function () {
+          $state.go('login')
+          Storage.clear()
+        }
+        $scope.toMain = function () {
+          $state.go('main.selectlist.select')
+        }
       }
     ])
 
     // 主菜单栏
-    .controller('MonitorsCtrl', ['$scope', 'Storage', 'Data', '$state',
-      function ($scope, Storage, Data, $state) {
+    .controller('MonitorsCtrl', ['$scope', 'Storage', '$state',
+      function ($scope, Storage, $state) {
         $scope.toinspection = function () {
           $state.go('main.monitors.inspection')
         }
