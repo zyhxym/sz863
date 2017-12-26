@@ -1,5 +1,71 @@
-<div class="tab-pane fade in active">
-    <div style="padding-bottom: 30px">
-hi
-    </div>
+<div class="tab-pane fade in active" >
+	<div class="row" style="padding-left: 30px">
+		<div class="col-sm-3" >
+			<h4 class="card-title cardTitle">控制指标</h3>
+		</div>
+		<div class="col-sm-2">
+			<h4 class="card-title cardTitle">个人参数</h3>
+		</div>
+		<div class="col-sm-2">
+			<h4 class="card-title cardTitle">建议范围</h3>
+		</div>
+		<div class="col-sm-5">
+			<h4 class="card-title cardTitle">评估得分</h3>
+			<p style="text-align: right;color:#aaa;font-weight: bold;">每项总分为100分</p>
+		</div>
+
+	</div>
+
+    <div class="row" ng-repeat="item in items" style="padding-left: 30px">
+    	<!-- <p style="text-align: right;color:#aaa;font-weight: bold;">每项总分为100分</p> -->
+    	<div class="col-sm-3" >
+	      	
+  			<div class="gridTex">{{item.key}}:
+  			</div>
+		</div>
+		<div class="col-sm-2">
+	      	<div class="gridTex center">{{item.personal|negativeFix}}
+  			</div>
+		</div>
+		<div class="col-sm-2">
+	      	<div class="gridTex center">{{item.control}}
+  			</div>
+		</div>
+		<div class="col-sm-5">
+		    
+			<div class="progress">
+		  		<div class="progress-bar" auto-progress="item.score" role="progressbar" >
+		  		</div>
+			</div>
+	      			
+	      		
+		      	
+		</div>
+	</div>
+	<hr>
+	<div class="row" ng-repeat="hi in hellos" style="padding-left: 30px;margin-top: 30px">
+    	<!-- <p style="text-align: right;color:#aaa;font-weight: bold;">每项总分为100分</p> -->
+    	<div class="col-sm-3" >
+	      	
+  			<div class="gridTex" style="font-weight: bold;">总体评分:
+  			</div>
+		</div>
+		<div class="col-sm-2">
+	      	
+		</div>
+		<div class="col-sm-2">
+	      	
+		</div>
+		
+		<div class="col-sm-5">
+			<div class="progress">
+		  		<div class="progress-bar" auto-progress="hi.score" role="progressbar" >
+		  		</div>
+			</div>
+		</div>
+	      			
+	      		
+		      	
+		</div>
+	</div>
   </div>

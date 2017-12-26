@@ -1,8 +1,5 @@
 <div class="row">
-    <div class="col-sm-1">
-    </div>
-    <div class="col-sm-5" id="examRec">
-        <div class="myCard">
+    <div class="col-sm-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">适用药</h3>
@@ -12,8 +9,13 @@
                         <button type="button" class="btn btn-link" ng-click="showinfo(1,$index)"> {{drug}}
                         </button>
                     </div>
+                    <p ng-if="DList.length==0" style="font-size: 15px">暂无适用药</p>
                 </div>
             </div>
+        
+    </div>
+    <div class="col-sm-4" >
+         
             <div class="panel panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title">过敏药物</h3>
@@ -23,8 +25,14 @@
                         <button type="button" class="btn btn-link" ng-click="showinfo(2,$index)"> {{drug}}
                         </button>
                     </div>
+                    <p ng-if="DListA.length==0" style="font-size: 15px">暂无过敏药物</p>
+
                 </div>
             </div>
+      
+    </div>
+        <div class="col-sm-4" >
+          
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title">禁忌药物</h3>
@@ -34,30 +42,35 @@
                         <button type="button" class="btn btn-link" ng-click="showinfo(3,$index)"> {{drug}}
                         </button>
                     </div>
+                    <p ng-if="DListC.length==0" style="font-size: 15px">暂无过敏药物</p>
+
                 </div>
             </div>
-        </div>
     </div>
-    <div class="col-sm-5" id="screenRec">
-        <div class="myCard">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">药物具体信息</h3>
-                </div>
-                <div class="panel-body">
-                    <ul style="margin-top: 10px；font-size: 20px;line-height:25px" class="must">
-                        <li ng-if="info.Dname">药物名称：{{info.Dname}}</li>
-                        <li ng-if="info.Dtype">药物类型：{{info.Dtype}}</li>
-                        <li ng-if="info.Ddoup">剂量上限：{{info.Ddoup}} {{info.Dun}}</li>
-                        <li ng-if="info.Ddodn">剂量下限：{{info.Ddodn}} {{info.Dun}}</li>
-                        <li ng-if="info.Dtup">使用次数上限：{{info.Dtup}}</li>
-                        <li ng-if="info.Dtdn">使用次数下限：{{info.Dtdn}}</li>
-                        <li ng-if="info.Duse">使用说明：{{info.Duse}}</li>
-                    </ul>
-                </div>
+</div>
+
+<!-- 药物具体信息 -->
+<div class="modal fade" id="drugdetail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-style: none">
+                <button type="button" class="close" ng-click="modal_close('#drugdetail')">&times;</button>
+                <h3 class="modal-title" id="modal-title">药物具体信息</h3>
+            </div>
+            <div class="modal-body" id="modal-body">
+        <ul class="list-group">
+            <li class="list-group-item" ng-if="info.Dname!=-1">药物名称：{{info.Dname}}</li>
+            <li class="list-group-item" ng-if="info.Dtype!=-1">药物类型：{{info.Dtype}}</li>
+            <li class="list-group-item" ng-if="info.Ddoup!=-1">剂量上限：{{info.Ddoup}} {{info.Dun}}</li>
+            <li class="list-group-item" ng-if="info.Ddodn!=-1">剂量下限：{{info.Ddodn}} {{info.Dun}}</li>
+            <li class="list-group-item" ng-if="info.Dtup!=-1">使用次数上限：{{info.Dtup}}</li>
+            <li class="list-group-item" ng-if="info.Dtdn!=-1">使用次数下限：{{info.Dtdn}}</li>
+            <li class="list-group-item" ng-if="info.Duse!=-1">使用说明：{{info.Duse}}</li>        
+        </ul>
+    </div>
+            <div class="modal-footer" style="border-style: none">
+                <button type="button" class="btn btn-primary" ng-click="modal_close('#drugdetail')">关闭</button>
             </div>
         </div>
-    </div>
-    <div class="col-sm-1">
     </div>
 </div>

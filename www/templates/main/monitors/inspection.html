@@ -1,29 +1,76 @@
-<!-- <div class="row">
-    <div class="col-sm-6" id="examRec">
-        <div class="myCard">
-            <h3 class="card-title cardTitle">医学检查建议</h3>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        </div>
-    </div>
-    <div class="col-sm-6" id="screenRec">
-        <div class="myCard">
-            <h3 class="card-title cardTitle">疾病筛查建议</h3>
-            <div ng-repeat="screen in screens">
-                <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">{{screen.ScreenRec}}</h5>
-                <p>{{screen.interval}}</p>
-                <ol style="margin-top: 10px" class="must">
-                    <li ng-if="screen.LabExam">实验室检查：{{screen.LabExam}}</li>
-                    <li ng-if="screen.PhyExam">物理检查：{{screen.PhyExam}}</li>
-                    <li ng-if="screen.SpeExam">特殊检查：{{screen.SpeExam}}</li>
-                </ol>
-                <p class="card-text" style="text-indent: 2em;color:#337ab7;font-size: 12px" ng-if="screen.note!='-1'">{{screen.note}}</p>
-                <ol style="color:#aaa" ng-if="screen.LabExamOp || screen.PhyExamOp||screen.SpeExamOp" class="optional">可选检查
-                    <li ng-if="screen.LabExamOp">{{screen.LabExamOp}}</li>
-                    <li ng-if="screen.PhyExamOp">{{screen.PhyExamOp}}</li>
-                    <li ng-if="screen.SpeExamOp">{{screen.SpeExamOp}}</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
- -->
+<div class="tab-pane fade in active">
+	<!-- <div class="row">
+        <div class="col-xs-2" style="text-align: center;font-size: 15px;margin-top: 0px;width:auto;float: right;">
+	        <uib-tabset  vertical="false"  data-toggle="tab">
+	            <uib-tab index="0" heading="医学检查建议" select="examRec()"></uib-tab>
+	            <uib-tab index="1" heading="疾病筛查建议" select="screenRec()"></uib-tab>
+	        </uib-tabset>
+    	</div>
+    </div> -->
+    <div class="row">
+		<div class="col-sm-6" id="examRec">
+			<div class="myCard">
+		      	<h3 class="card-title cardTitle">医学检查建议</h3>
+		      	<div>
+		      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">实验室检查</h5> 
+
+			      	<ol style="margin-top: 10px" class="must">
+			      			<li ng-repeat="lab in exams.LabExam">{{lab}}</li>
+			      			
+			      	</ol>
+			      	<ol style="color:#aaa" ng-if="exams.LabExamOp.length" class="optional">可选检查
+		      			<li ng-repeat="labop in exams.LabExamOp">{{labop}}</li>
+		      		</ol>
+		      	</div>
+		      	<div>
+		      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">物理检查</h5> 
+
+			      	<ol style="margin-top: 10px" class="must">
+			      		<li ng-repeat="phy in exams.PhyExam">{{phy}}</li>
+			      			
+			      	</ol>
+			      	<ol style="color:#aaa" ng-if="exams.PhyExamOp.length" class="optional">可选检查
+		      			<li ng-repeat="phyop in exams.PhyExamOp">{{phyop}}</li>
+		      		</ol>
+		      	</div>
+		      	<div>
+		      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">特殊检查</h5> 
+
+			      	<ol style="margin-top: 10px" class="must">
+			      		<li ng-repeat="spe in exams.SpeExam">{{spe}}</li>
+			      			
+			      	</ol>
+			      	<ol style="color:#aaa" ng-if="exams.PhyExamOp.length" class="optional">可选检查
+		      			<li ng-repeat="speop in exams.SpeExamOp">{{speop}}</li>
+		      		</ol>
+		      	</div>
+		      	
+			</div>
+		</div>
+		<div class="col-sm-6" id="screenRec">
+			<div class="myCard">
+		      	<h3 class="card-title cardTitle">疾病筛查建议</h3>
+		      	<div ng-repeat="screen in screens">
+		      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">{{screen.ScreenRec}}</h5> 
+		      		<p style="text-align: right;color:#aaa;font-weight: bold;">筛查间隔：{{screen.interval}}（月）</p>
+		      		<ol style="margin-top: 10px" class="must">
+		      			<li ng-if="screen.LabExam">实验室检查：{{screen.LabExam}}</li>
+		      			<li ng-if="screen.PhyExam">物理检查：{{screen.PhyExam}}</li>
+		      			<li ng-if="screen.SpeExam">特殊检查：{{screen.SpeExam}}</li>
+		      		</ol>
+		      		<p class="card-text" style="text-indent: 2em;color:#337ab7;font-size: 12px" ng-if="screen.note!='-1'">【注意事项】{{screen.note}}</p>
+		      		<ol style="color:#aaa" ng-if="screen.LabExamOp || screen.PhyExamOp||screen.SpeExamOp" class="optional">可选检查
+		      			<li ng-if="screen.LabExamOp">{{screen.LabExamOp}}</li>
+		      			<li ng-if="screen.PhyExamOp">{{screen.PhyExamOp}}</li>
+		      			<li ng-if="screen.SpeExamOp">{{screen.SpeExamOp}}</li>
+		      		</ol>
+
+		      		
+		      	</div>
+		      	
+			</div>
+		</div>
+	</div>
+
+  
+  </div>

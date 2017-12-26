@@ -20,4 +20,10 @@ angular.module('filters', [])
             return ret
         }
     }])
+
+    .filter('negativeFix', [function() {
+        return function(number) {
+            return number===-1?"暂未录入指标":number
+        }
+    }])
   
