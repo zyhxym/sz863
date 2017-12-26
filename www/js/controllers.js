@@ -107,7 +107,7 @@
           $scope.screens = data
         })
         ExamRecommended.getExamRec(id).then(function (data) {
-          console.log(data)
+          // console.log(data)
           $scope.exams = data
         })
       }

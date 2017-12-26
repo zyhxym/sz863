@@ -9,6 +9,7 @@
                         <button type="button" class="btn btn-link" ng-click="showinfo(1,$index)"> {{drug}}
                         </button>
                     </div>
+                    <p ng-if="DList.length==0" style="font-size: 15px">暂无适用药</p>
                 </div>
             </div>
         
@@ -24,6 +25,8 @@
                         <button type="button" class="btn btn-link" ng-click="showinfo(2,$index)"> {{drug}}
                         </button>
                     </div>
+                    <p ng-if="DListA.length==0" style="font-size: 15px">暂无过敏药物</p>
+
                 </div>
             </div>
       
@@ -39,6 +42,8 @@
                         <button type="button" class="btn btn-link" ng-click="showinfo(3,$index)"> {{drug}}
                         </button>
                     </div>
+                    <p ng-if="DListC.length==0" style="font-size: 15px">暂无过敏药物</p>
+
                 </div>
             </div>
     </div>
@@ -48,7 +53,7 @@
 <div class="modal fade" id="drugdetail" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="border-style: none">
                 <button type="button" class="close" ng-click="modal_close('#drugdetail')">&times;</button>
                 <h3 class="modal-title" id="modal-title">药物具体信息</h3>
             </div>
@@ -63,7 +68,7 @@
             <li class="list-group-item" ng-if="info.Duse!=-1">使用说明：{{info.Duse}}</li>        
         </ul>
     </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="border-style: none">
                 <button type="button" class="btn btn-primary" ng-click="modal_close('#drugdetail')">关闭</button>
             </div>
         </div>
