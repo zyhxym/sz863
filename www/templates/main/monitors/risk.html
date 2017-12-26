@@ -1,36 +1,54 @@
 <div class="row">
-    <div class="col-sm-2">
-    </div>
-    <div class="col-sm-8">
+    <div class="col-sm-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">风险因子</h3>
+                <h3 class="panel-title">糖尿病风险因素</h3>
             </div>
             <div class="panel-body">
-                <h5 class="label label-warning ng-binding">糖尿病风险因素</h5>
-                <p ng-repeat="DiaName in risk.DiaName" style="margin-top: 10px;margin-left:10px">
+                <div class="gridTex" ng-repeat="DiaName in risk.DiaName" style="margin-top: 10px;margin-left:10px">
                     {{DiaName}}
-                </p>
+                </div>
                 <hr>
-                <h5 class="label label-warning ng-binding">卒中风险因素</h5>
-                <p ng-repeat="StrokeName in risk.StrokeName" style="margin-top: 10px;margin-left:10px">
-                    {{StrokeName}}
-                </p>
-                <hr>
-                <h5 class="label label-warning ng-binding">高血压风险因素</h5>
-                <p ng-repeat="HypName in risk.HypName" style="margin-top: 10px;margin-left:10px">
-                    {{HypName}}
-                </p>
-                <hr>
-                <h5 class="label label-warning ng-binding">心血管疾病风险因素</h5>
-                <p ng-repeat="CVDName in risk.CVDName" style="margin-top: 10px;margin-left:10px">
-                    {{CVDName}}
-                </p>
-                <hr>
-
             </div>
         </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">卒中风险因素</h3>
+            </div>
+            <div class="panel-body">
+                <div class="gridTex"  ng-repeat="StrokeName in risk.StrokeName" style="margin-top: 10px;margin-left:10px">
+                    {{StrokeName}}
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">高血压风险因素</h3>
+            </div>
+            <div class="panel-body">
+                <div class="gridTex"  ng-repeat="HypName in risk.HypName" style="margin-top: 10px;margin-left:10px">
+                    {{HypName}}
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">心血管疾病风险因素</h3>
+            </div>
+            <div class="panel-body">
+                <div class="gridTex"  ng-repeat="CVDName in risk.CVDName" style="margin-top: 10px;margin-left:10px">
+                    {{CVDName}}
+                </div>
+                <hr>
+            </div>
+        </div>
     </div>
 </div>
