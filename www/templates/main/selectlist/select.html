@@ -1,8 +1,14 @@
     <table ng-table="scoredetail" class="table table-condensed table-bordered table-striped" style="margin-top: 10px;font-size:15px">
         <tr ng-repeat="c in userlist" style="text-align: center;">
-            <td title="'患者姓名'">{{c.patientname}}
+            <td title="'患者姓名'">{{c.name}}
             </td>
-            <td title="'患者id'">{{c.patientid}}
+            <td title="'患者年龄'">{{c.age}}
+            </td>
+            <td title="'创建时间'">{{c.time|negativeFix}}
+            </td>
+            <td title="'患者性别'">{{c.gender}}
+            </td>
+            <td title="'已确诊疾病'">{{c.diseae|arraytostring}}
             </td>
             <td title="'操作'">
                 <button class="btn btn-link" style="text-decoration:none; outline:none; padding:0px; border:0px;font-weight: bold; " ng-click="toUserDetail(c.patientid)">选择</button>

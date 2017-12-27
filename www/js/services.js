@@ -51,8 +51,9 @@
         }, {
             // 向患者输入数据属性，即添加患者信息,输入：string guid, string value, string property
           addPatProperty: { method: 'POST', params: { route: 'addObjProperty', guid: '@guid' }, timeout: period },
-          createPat: { method: 'POST', params: { route: 'crePatient' }, timeout: period }
-
+          createPat: { method: 'POST', params: { route: 'crePatient' }, timeout: period },
+          // 获取当前患者信息
+          PatientInfo: { method: 'GET', params: { route: 'PatientInfo', guid: '@guid' }, timeout: period }
         })
       }
       // 诊断
@@ -89,7 +90,6 @@
           // 推理建议使用的药物。结果为药物在本体知识库中的名称，需要调用DrugInfo方法获得药物的具体信息。结果分类返回。
           drugsRec: { method: 'GET', params: { route: 'DrugProvider', guid: '@guid' }, timeout: period },
           // 查询药物具体信息，包括名称、类型、用量、注意事项等，对接DrugProvider方法。需要将DrugProvider得到的DList、DListA和DListC输入到DrugInfo中，得到药物信息。
-
           drugsInfo: { method: 'GET', params: { route: 'DrugInfo', DIn: '@DIn'}, timeout: period },
           drugGroupsRec: { method: 'GET', params: { route: 'MedRecGen', guid: '@guid'}, timeout: period },
           groupsInfo: { method: 'GET', params: { route: 'MedRecInfo'}, timeout: period }
@@ -191,7 +191,15 @@
         })
         return deferred.promise
       }
-
+      self.PatientInfo = function (obj) {
+        var deferred = $q.defer()
+        Data.InfoInput.PatientInfo(obj, function (data, headers) {
+          deferred.resolve(data)
+        }, function (err) {
+          deferred.reject(err)
+        })
+        return deferred.promise
+      }
       return self
     }])
 

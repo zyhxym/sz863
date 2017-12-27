@@ -58,9 +58,14 @@
       }
     }])
 
-    .controller('MainCtrl', ['$scope', 'Storage', '$state',
-
-      function ($scope, Storage, $state) {
+    .controller('MainCtrl', ['$scope', 'Storage', '$state', 'InfoInput',
+      function ($scope, Storage, $state, InfoInput) {
+        Storage.set('ifpatient', false)
+        $scope.ifpatient = Storage.get('ifpatient')
+        InfoInput.PatientInfo({ guid: Storage.get('currentPatient') }).then(function (data) {
+          console.log(data)
+          $scope.user = data
+        })
         $scope.UserName = Storage.get('currentUser')
         $scope.Role = Storage.get('currentrole')
         $scope.logout = function () {
@@ -110,11 +115,11 @@
       function ($scope, Storage, $state, ExamRecommended) {
         var id = Storage.get('currentPatient')
         ExamRecommended.getScreenRec(id).then(function (data) {
-          // console.log(data)
+                // console.log(data)
           $scope.screens = data
         })
         ExamRecommended.getExamRec(id).then(function (data) {
-          // console.log(data)
+                // console.log(data)
           $scope.exams = data
         })
       }
@@ -130,11 +135,18 @@
 
     .controller('medicineCtrl', ['$scope', 'Storage', 'MedicationRec', '$state',
       function ($scope, Storage, MedicationRec, Data, $state) {
+        var DList = new Array()
+        var DListA = new Array()
+        var DListC = new Array()
+
         MedicationRec.drugsRec({ guid: Storage.get('currentPatient') }).then(function (data) {
           console.log(data)
-          $scope.DList = data.DList
-          $scope.DListA = data.DListA
-          $scope.DListC = data.DListC
+          $scope.DList = data.DListName
+          $scope.DListA = data.DListAName
+          $scope.DListC = data.DListCName
+          DList = data.DList
+          DListA = data.DListA
+          DListC = data.DListC
         })
 
         $scope.modal_close = function (target) {
@@ -145,19 +157,19 @@
           console.log($scope.DList[index])
           switch (style) {
             case 1:
-              MedicationRec.drugsInfo({ DIn: $scope.DList[index] }).then(function (data) {
+              MedicationRec.drugsInfo({ DIn: DList[index] }).then(function (data) {
                 console.log(data)
                 $scope.info = data
               })
               break
             case 2:
-              MedicationRec.drugsInfo({ DIn: $scope.DListA[index] }).then(function (data) {
+              MedicationRec.drugsInfo({ DIn: DListA[index] }).then(function (data) {
                 console.log(data)
                 $scope.info = data
               })
               break
             case 3:
-              MedicationRec.drugsInfo({ DIn: $scope.DListC[index] }).then(function (data) {
+              MedicationRec.drugsInfo({ DIn: DListC[index] }).then(function (data) {
                 console.log(data)
                 $scope.info = data
               })
@@ -185,32 +197,32 @@
       function ($scope, Storage, Evaluation, $state, LifeAdivce, $q) {
         var id = Storage.get('currentPatient')
 
-        Evaluation.evaluateScore({guid: id}).then(function (data) {
+        Evaluation.evaluateScore({ guid: id }).then(function (data) {
           var keys = [
-            {word: 'BMI', code: 'bmi'},
-            {word: '收缩压', code: 'sys'},
-            {word: '舒张压', code: 'dia'},
-            {word: '空腹血糖', code: 'glu'},
-            {word: '糖耐受2小时后血糖', code: 'glu2h'},
-            {word: '糖化血红蛋白', code: 'hba1c'},
-            {word: '高密度脂蛋白胆固醇', code: 'hdl'},
-            {word: '低密度脂蛋白胆固醇', code: 'ldl'},
-            {word: '总胆固醇', code: 'tc'},
-            {word: '甘油三酯', code: 'tg'},
-            {word: '尿白蛋白/肌酐比值', code: 'acr'},
-            {word: '尿白蛋白排泄率', code: 'uae'}
+                    { word: 'BMI', code: 'bmi' },
+                    { word: '收缩压', code: 'sys' },
+                    { word: '舒张压', code: 'dia' },
+                    { word: '空腹血糖', code: 'glu' },
+                    { word: '糖耐受2小时后血糖', code: 'glu2h' },
+                    { word: '糖化血红蛋白', code: 'hba1c' },
+                    { word: '高密度脂蛋白胆固醇', code: 'hdl' },
+                    { word: '低密度脂蛋白胆固醇', code: 'ldl' },
+                    { word: '总胆固醇', code: 'tc' },
+                    { word: '甘油三酯', code: 'tg' },
+                    { word: '尿白蛋白/肌酐比值', code: 'acr' },
+                    { word: '尿白蛋白排泄率', code: 'uae' }
           ]
           var results = new Map()
-          // console.log(data)
-          $scope.hellos = [{score: data.total}]
-          // console.log($scope.totalScore)
+                // console.log(data)
+          $scope.hellos = [{ score: data.total }]
+                // console.log($scope.totalScore)
           data.score.forEach(function (value, index) {
             if (value != -1) {
-              results.set(keys[index].code, {key: keys[index].word, score: value})
+              results.set(keys[index].code, { key: keys[index].word, score: value })
             }
           })
 
-          $q.all([LifeAdivce.controlGoal({guid: id}), LifeAdivce.patControl({guid: id})]).then(function (data) {
+          $q.all([LifeAdivce.controlGoal({ guid: id }), LifeAdivce.patControl({ guid: id })]).then(function (data) {
             var arr = []
             console.log(data)
             for (var [key, value] of results) {
@@ -224,18 +236,22 @@
       }
 
     ])
-    .controller('selectCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
-      function ($scope, Storage, Data, $state, riskToONT) {
-        $scope.userlist = [{
-          patientname: '张三',
-          patientid: 'P000125'
-        },
-        {
-          patientname: '李四',
-          patientid: 'P000121'
-        }
-        ]
-
+    .controller('selectCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT', 'InfoInput',
+      function ($scope, Storage, Data, $state, riskToONT, InfoInput) {
+        var userlist = new Array()
+        InfoInput.PatientInfo({ guid: 'P000125' }).then(function (data) {
+          console.log(data)
+          userlist.push(data)
+        })
+        InfoInput.PatientInfo({ guid: 'P000126' }).then(function (data) {
+          console.log(data)
+          userlist.push(data)
+        })
+        InfoInput.PatientInfo({ guid: 'P000121' }).then(function (data) {
+          console.log(data)
+          userlist.push(data)
+        })
+        $scope.userlist = userlist
         $scope.toUserDetail = function (ID) {
           Storage.set('currentPatient', ID)
           riskToONT.normalRisk(ID)
