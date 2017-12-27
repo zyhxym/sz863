@@ -27,3 +27,19 @@ angular.module('filters', [])
         }
     }])
   
+
+      .filter('arraytostring', [function() {
+        return function(type) {
+            var name = ""
+
+            if (type == null) {
+                name = null
+            } else {
+                for (i = 0; i < type.length; i++) {
+                    name = name + type[i] + ' ';
+                }
+            }
+            return name
+        }
+    }])
+
