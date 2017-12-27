@@ -1,5 +1,5 @@
 angular.module('filters', [])
- 
+
 
     .filter('timeFormat', [function() {
         return function(date, format) {
@@ -23,23 +23,33 @@ angular.module('filters', [])
 
     .filter('negativeFix', [function() {
         return function(number) {
-            return number===-1?"暂未录入指标":number
+            return number === -1 ? "暂未录入指标" : number
         }
     }])
-  
 
-      .filter('arraytostring', [function() {
+
+    .filter('arraytostring', [function() {
         return function(type) {
             var name = ""
-
             if (type == null) {
-                name = null
+                name = ""
             } else {
                 for (i = 0; i < type.length; i++) {
                     name = name + type[i] + ' ';
                 }
             }
+            if (name == "") { name = "暂未录入指标" }
             return name
         }
     }])
 
+
+    .filter('Fix', [function() {
+        return function(type) {
+            var name = ""
+            if (type == "-1") {
+                name = "暂无录入指标"
+            } else { name = type }
+            return name
+        }
+    }])

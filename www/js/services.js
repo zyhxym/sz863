@@ -94,6 +94,7 @@
           drugGroupsRec: { method: 'GET', params: { route: 'MedRecGen', guid: '@guid'}, timeout: period },
           groupsInfo: { method: 'GET', params: { route: 'MedRecInfo'}, timeout: period }
 
+
         })
       }
 
@@ -355,6 +356,7 @@
         })
         return deferred.promise
       }
+<<<<<<< HEAD
       self.groupsInfo = function (obj) {
         var deferred = $q.defer()
         Data.MedicationRec.groupsInfo(obj, function (data, headers) {
@@ -365,6 +367,9 @@
         return deferred.promise
       }
 
+=======
+        
+>>>>>>> refs/remotes/Joooooooye/master
       return self
     }])
     // 生活建议

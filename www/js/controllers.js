@@ -59,21 +59,22 @@
     }])
 
     .controller('MainCtrl', ['$scope', 'Storage', '$state', 'InfoInput',
-      function ($scope, Storage, $state, InfoInput) {
-        Storage.set('ifpatient', false)
-        $scope.ifpatient = Storage.get('ifpatient')
-        InfoInput.PatientInfo({ guid: Storage.get('currentPatient') }).then(function (data) {
-          console.log(data)
-          $scope.user = data
-        })
-        $scope.UserName = Storage.get('currentUser')
-        $scope.Role = Storage.get('currentrole')
-        $scope.logout = function () {
-          $state.go('login')
-          Storage.clear()
-        }
-        $scope.toMain = function () {
-          $state.go('main.selectlist.select')
+
+        function($scope, Storage, $state, InfoInput) {
+            InfoInput.PatientInfo({ guid: Storage.get('currentPatient') }).then(function(data) {
+                console.log(data)
+                $scope.user = data
+            })
+            $scope.UserName = Storage.get('currentUser')
+            $scope.Role = Storage.get('currentrole')
+            $scope.logout = function() {
+                $state.go('login')
+                Storage.clear()
+            }
+            $scope.toMain = function() {
+                $state.go('main.selectlist.select')
+
+            }
         }
       }
     ])
@@ -237,25 +238,26 @@
 
     ])
     .controller('selectCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT', 'InfoInput',
-      function ($scope, Storage, Data, $state, riskToONT, InfoInput) {
-        var userlist = new Array()
-        InfoInput.PatientInfo({ guid: 'P000125' }).then(function (data) {
-          console.log(data)
-          userlist.push(data)
-        })
-        InfoInput.PatientInfo({ guid: 'P000126' }).then(function (data) {
-          console.log(data)
-          userlist.push(data)
-        })
-        InfoInput.PatientInfo({ guid: 'P000121' }).then(function (data) {
-          console.log(data)
-          userlist.push(data)
-        })
-        $scope.userlist = userlist
-        $scope.toUserDetail = function (ID) {
-          Storage.set('currentPatient', ID)
-          riskToONT.normalRisk(ID)
-          riskToONT.stateRisk(ID)
+
+        function($scope, Storage, Data, $state, riskToONT, InfoInput) {
+            var userlist = new Array()
+            InfoInput.PatientInfo({ guid: "P000125" }).then(function(data) {
+                data.patientid = "P000125"
+                userlist.push(data)
+            })
+            InfoInput.PatientInfo({ guid: "P000126" }).then(function(data) {
+                data.patientid = "P000126"
+                userlist.push(data)
+            })
+            InfoInput.PatientInfo({ guid: "P000121" }).then(function(data) {
+                data.patientid = "P000121"
+                userlist.push(data)
+            })
+            $scope.userlist = userlist
+            $scope.toUserDetail = function(ID) {
+                Storage.set('currentPatient', ID)
+                riskToONT.normalRisk(ID)
+                riskToONT.stateRisk(ID)
                 // currentPatient记录当前选择的患者
           $state.go('main.monitors.inspection')
         }
@@ -263,12 +265,15 @@
     ])
 
     .controller('selectlistCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
-      function ($scope, Storage, Data, $state, riskToONT) {
-        $scope.createPats = function () {
-          $state.go('main.selectlist.input')
-        }
-        $scope.currentPats = function () {
-          $state.go('main.selectlist.select')
+
+        function($scope, Storage, Data, $state, riskToONT) {
+
+            $scope.createPats = function() {
+                $state.go('main.selectlist.input')
+            }
+            $scope.currentPats = function() {
+                $state.go('main.selectlist.select')
+            }
         }
       }
     ])
