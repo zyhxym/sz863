@@ -90,8 +90,7 @@
           drugsRec: { method: 'GET', params: { route: 'DrugProvider', guid: '@guid' }, timeout: period },
           // 查询药物具体信息，包括名称、类型、用量、注意事项等，对接DrugProvider方法。需要将DrugProvider得到的DList、DListA和DListC输入到DrugInfo中，得到药物信息。
           drugsInfo: { method: 'GET', params: { route: 'DrugInfo', DIn: '@DIn'}, timeout: period },
-          // 查询输入药物的具体信息
-          drugsInfoAll: { method: 'POST', params: { route: 'DrugInfo', DIn: '@DIn'}, timeout: period }
+      
         })
       }
 
@@ -343,15 +342,7 @@
         })
         return deferred.promise
       }
-            self.drugsInfoAll = function (obj) {
-        var deferred = $q.defer()
-        Data.MedicationRec.drugsInfoAll(obj, function (data, headers) {
-          deferred.resolve(data)
-        }, function (err) {
-          deferred.reject(err)
-        })
-        return deferred.promise
-      }
+        
       return self
     }])
     // 生活建议

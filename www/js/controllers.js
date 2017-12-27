@@ -60,8 +60,6 @@
 
     .controller('MainCtrl', ['$scope', 'Storage', '$state', 'InfoInput',
         function($scope, Storage, $state, InfoInput) {
-            Storage.set("ifpatient", false)
-            $scope.ifpatient = Storage.get("ifpatient")
             InfoInput.PatientInfo({ guid: Storage.get('currentPatient') }).then(function(data) {
                 console.log(data)
                 $scope.user = data
@@ -74,6 +72,7 @@
             }
             $scope.toMain = function() {
                 $state.go('main.selectlist.select')
+
             }
         }
     ])
@@ -242,15 +241,15 @@
         function($scope, Storage, Data, $state, riskToONT, InfoInput) {
             var userlist = new Array()
             InfoInput.PatientInfo({ guid: "P000125" }).then(function(data) {
-                console.log(data)
+                data.patientid = "P000125"
                 userlist.push(data)
             })
             InfoInput.PatientInfo({ guid: "P000126" }).then(function(data) {
-                console.log(data)
+                data.patientid = "P000126"
                 userlist.push(data)
             })
             InfoInput.PatientInfo({ guid: "P000121" }).then(function(data) {
-                console.log(data)
+                data.patientid = "P000121"
                 userlist.push(data)
             })
             $scope.userlist = userlist
@@ -266,6 +265,7 @@
 
     .controller('selectlistCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
         function($scope, Storage, Data, $state, riskToONT) {
+
             $scope.createPats = function() {
                 $state.go('main.selectlist.input')
             }
