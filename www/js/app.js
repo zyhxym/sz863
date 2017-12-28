@@ -17,6 +17,7 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
                 // 主页面
                 .state('main', {
                   url: '/main',
+                  cache: false,
                   templateUrl: 'templates/main.html',
                   controller: 'MainCtrl'
                 })
@@ -36,6 +37,11 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
                   templateUrl: 'templates/main/selectlist/input.html',
                   controller: 'inputCtrl'
                 })
+                .state('main.selectlist.create', {
+                  url: '/input',
+                  templateUrl: 'templates/main/selectlist/create.html',
+                  controller: 'createCtrl'
+                })
                 .state('main.monitors', {
                   url: '/monitors',
                   templateUrl: 'templates/main/monitors.html',
@@ -47,7 +53,11 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
                   templateUrl: 'templates/main/monitors/inspection.html',
                   controller: 'inspectionCtrl'
                 })
-
+                .state('main.monitors.diagnosis', {
+                  url: '/inspection',
+                  templateUrl: 'templates/main/monitors/diagnosis.html',
+                  controller: 'diagnosisCtrl'
+                })
                 .state('main.monitors.risk', {
                   url: '/risk',
                   templateUrl: 'templates/main/monitors/risk.html',
@@ -57,6 +67,11 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
                   url: '/medicine',
                   templateUrl: 'templates/main/monitors/medicine.html',
                   controller: 'medicineCtrl'
+                })
+                .state('main.monitors.medicineGroup', {
+                  url: '/medicineGroup',
+                  templateUrl: 'templates/main/monitors/medicineGroup.html',
+                  controller: 'medicineGroupCtrl'
                 })
                 .state('main.monitors.life', {
                   url: '/life',
@@ -74,7 +89,7 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
     .config(['$httpProvider', function ($httpProvider) {
       $httpProvider.interceptors.push('myInterceptor')
     }])
-    .factory('myInterceptor', ['$rootScope', function ($rootScope) {
+    .factory('myInterceptor', ['$rootScope', '$injector', function ($rootScope, $injector) {
       // var loading = $()
 
       var httpControl = {
@@ -87,13 +102,20 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
           return config
         },
         response: function (response) {
-　　　　　　　　 　// end
           if (response.config.url.toString().indexOf('http:') === 0) {
-            // console.log(response)
+            if (response.data.flag != 1) {
+              var $http = $injector.get('$http')
+              return $http(response)
+            }
             $('body').LoadingOverlay('hide')
           }
 
           return response
+        },
+        responseError: function (err) {
+          $('body').LoadingOverlay('hide')
+          // alert('网络有问题，请刷新！')
+          return err
         }
       }
       return httpControl

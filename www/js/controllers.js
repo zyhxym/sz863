@@ -42,8 +42,7 @@
             Storage.set('currentUser', user)
             Storage.set('currentrole', login.role)
 
-            console.log(user)
-                    // currentUser记录当前登录用户
+            // currentUser记录当前登录用户以及用户角色
 
             Ontology.readONT().then(function (data) {
                         // 本体读入
@@ -58,23 +57,18 @@
       }
     }])
 
-    .controller('MainCtrl', ['$scope', 'Storage', '$state', 'InfoInput',
+    .controller('MainCtrl', ['$scope', 'Storage', '$state',
 
-        function($scope, Storage, $state, InfoInput) {
-            InfoInput.PatientInfo({ guid: Storage.get('currentPatient') }).then(function(data) {
-                console.log(data)
-                $scope.user = data
-            })
-            $scope.UserName = Storage.get('currentUser')
-            $scope.Role = Storage.get('currentrole')
-            $scope.logout = function() {
-                $state.go('login')
-                Storage.clear()
-            }
-            $scope.toMain = function() {
-                $state.go('main.selectlist.select')
-
-            }
+      function ($scope, Storage, $state) {
+        $scope.UserName = Storage.get('currentUser')
+        $scope.Role = Storage.get('currentrole')
+        $scope.logout = function () {
+          $state.go('login')
+          Storage.clear()
+        }
+        $scope.toMain = function () {
+          $state.go('main.selectlist.select')
+          Storage.rm('currentPatient')
         }
       }
     ])
@@ -82,6 +76,10 @@
     // 主菜单栏
     .controller('MonitorsCtrl', ['$scope', 'Storage', '$state',
       function ($scope, Storage, $state) {
+        $scope.pat = JSON.parse(Storage.get('PatientInfo'))
+        $scope.todiagnosis = function () {
+          $state.go('main.monitors.diagnosis')
+        }
         $scope.toinspection = function () {
           $state.go('main.monitors.inspection')
         }
@@ -97,17 +95,280 @@
         $scope.toassess = function () {
           $state.go('main.monitors.assess')
         }
+        $scope.tomedicineGroup = function () {
+          $state.go('main.monitors.medicineGroup')
+        }
       }
     ])
 
-    .controller('inputCtrl', ['$scope', 'Storage', 'Data', '$state',
-      function ($scope, Storage, Data, $state) {
-        $scope.accept = function () {
-          console.log('确认了')
-          $state.go('main.monitors.inspection')
+    .controller('inputCtrl', ['$scope', 'Storage', '$state',
+      function ($scope, Storage, $state) {
+        $scope.logStatus = ''
+        $scope.pat = {}
+        $scope.pat.gender = 'male'
+        $scope.createPat = function (patient) {
+          $state.go('main.selectlist.create')
         }
-        $scope.cancel = function () {
-          $scope.textInfo = {}
+      }
+    ])
+
+    .controller('createCtrl', ['$scope', 'Storage', 'Data', '$state',
+      function ($scope, Storage, Data, $state) {
+        $scope.inputPage = 1
+        $scope.previous = false
+        $scope.buttonText = '下一步'
+        $scope.next = function () {
+          if ($scope.inputPage == 3) {
+            // 要把新的患者写进Storage里
+            $state.go('main.monitors.inspection')
+          } else {
+            $scope.inputPage ++
+            $scope.buttonText = $scope.inputPage == 3 ? '完成了' : '下一步'
+          }
+          $scope.previous = true
+        }
+        $scope.last = function () {
+          $scope.inputPage --
+          if ($scope.inputPage == 1) {
+            $scope.previous = false
+          }
+        }
+        $scope.phys = [
+          {
+            name: '多饮',
+            value: 'overdrunk'
+          },
+          {
+            name: '多食',
+            value: 'overdine'
+          },
+          {
+            name: '多尿',
+            value: 'overpee'
+          },
+          {
+            name: '呕吐',
+            value: 'vommit'
+          },
+          {
+            name: '咳嗽',
+            value: 'stress'
+          },
+          {
+            name: '头痛',
+            value: 'diabets'
+          },
+          {
+            name: '呼吸困难',
+            value: 'breathe'
+          },
+          {
+            name: '惊厥',
+            value: 'thrill'
+          },
+          {
+            name: '意识障碍',
+            value: 'conscious'
+          },
+          {
+            name: '疱疹',
+            value: 'herpis'
+          },
+          {
+            name: '乏力',
+            value: 'fatigue'
+          },
+          {
+            name: '发热',
+            value: 'toothy'
+          },
+          {
+            name: '口齿不清',
+            value: 'hypertension'
+          },
+          {
+            name: '肥胖',
+            value: 'obesity'
+          },
+          {
+            name: '蛋白尿',
+            value: 'Proteinuria'
+          },
+          {
+            name: '吞咽困难',
+            value: 'swallow'
+          }
+
+        ]
+        $scope.habits = [
+          {
+            name: '吸烟',
+            value: 'smoke'
+          },
+          {
+            name: '饮酒',
+            value: 'drink'
+          },
+          {
+            name: '高盐饮食',
+            value: 'salt'
+          },
+          {
+            name: '高脂饮食',
+            value: 'oil'
+          },
+          {
+            name: '精神压力大',
+            value: 'stress'
+          },
+          {
+            name: '近亲糖尿病史',
+            value: 'diabets'
+          },
+          {
+            name: '家族心血管病史',
+            value: 'heart'
+          },
+          {
+            name: '家族高血压病史',
+            value: 'hypertension'
+          }
+
+        ]
+        $scope.diags = {
+          endocrine: [
+            {
+              name: '1型糖尿病',
+              value: 'dm1'
+            },
+            {
+              name: '2型糖尿病',
+              value: 'dm2'
+            },
+            {
+              name: '糖尿病',
+              value: 'dm'
+            },
+            {
+              name: '妊娠型糖尿病',
+              value: 'Gestational'
+            }
+          ],
+          heart: [
+            {
+              name: '冠心病',
+              value: 'chd'
+            },
+            {
+              name: '心功能不全',
+              value: 'hf'
+            },
+            {
+              name: '心房颤动',
+              value: 'af'
+            }
+          ],
+          cardio: [
+            {
+              name: '心血管疾病史',
+              value: 'heartHistory'
+            },
+            {
+              name: '高血压',
+              value: 'hypertension'
+            }
+
+          ],
+          breathe: [
+            {
+              name: '甲型流感',
+              value: 'flu1'
+            },
+            {
+              name: '乙型流感',
+              value: 'flu2'
+            },
+            {
+              name: '丙型流感',
+              value: 'flu3'
+            },
+            {
+              name: '流感',
+              value: 'flu'
+            }
+          ],
+          kidney: [
+            {
+              name: '糖尿病肾病',
+              value: 'dmKID'
+            },
+            {
+              name: '肾功能不全',
+              value: 'KF'
+            },
+            {
+              name: '慢性肾病',
+              value: 'CKD'
+            }
+          ],
+          brain: [
+            {
+              name: '脑卒中',
+              value: 'brain1'
+            },
+            {
+              name: '缺血性脑卒中',
+              value: 'brain2'
+            },
+            {
+              name: '短暂性脑缺血发作',
+              value: 'brain3'
+            },
+            {
+              name: '蛛网膜下腔出血',
+              value: 'brain4'
+            }
+          ],
+          blood: [
+            {
+              name: '高脂血症',
+              value: 'blood1'
+            },
+            {
+              name: '高胆固醇血症',
+              value: 'blood2'
+            },
+            {
+              name: '高纤维蛋白原血症',
+              value: 'blood3'
+            },
+            {
+              name: '高同型半胱氨酸血症',
+              value: 'blood4'
+            }
+          ],
+          other: [
+            {
+              name: '糖尿病视网膜病变',
+              value: 'dmEye'
+            },
+            {
+              name: '肝功能不全',
+              value: 'LiverF'
+            },
+            {
+              name: '手足口病',
+              value: 'HFM'
+            },
+            {
+              name: '下肢动脉粥样硬化病变',
+              value: 'LB'
+            },
+            {
+              name: '重度颈动脉狭窄',
+              value: 'valve'
+            }
+          ]
         }
       }
     ])
@@ -122,6 +383,15 @@
         ExamRecommended.getExamRec(id).then(function (data) {
                 // console.log(data)
           $scope.exams = data
+        })
+      }
+
+    ])
+
+    .controller('diagnosisCtrl', ['$scope', 'Storage', '$state', 'Diagnosis',
+      function ($scope, Storage, $state, Diagnosis) {
+        Diagnosis.diseaseDiag({guid: Storage.get('currentPatient')}).then(function (data) {
+          $scope.diags = data
         })
       }
 
@@ -141,7 +411,7 @@
         var DListC = new Array()
 
         MedicationRec.drugsRec({ guid: Storage.get('currentPatient') }).then(function (data) {
-          console.log(data)
+          // console.log(data)
           $scope.DList = data.DListName
           $scope.DListA = data.DListAName
           $scope.DListC = data.DListCName
@@ -176,6 +446,62 @@
               })
               break
           }
+          $('#drugdetail').modal('show')
+        }
+      }
+    ])
+    .controller('medicineGroupCtrl', ['$scope', 'Storage', 'MedicationRec', '$state',
+      function ($scope, Storage, MedicationRec, $state) {
+        var medRec = [], medUnRec = [], medCaution = []
+        MedicationRec.drugGroupsRec({guid: Storage.get('currentPatient')}).then(function (data) {
+          $scope.group = data
+          medRec = data.MedRecNode
+          medUnRec = data.MedUnRecNode
+          medCaution = data.MedCauRecNode
+        })
+        var drugList = []
+        $scope.medicine = function (group, index) {
+          switch (group) {
+            case 'rec':
+              MedicationRec.groupsInfo({rec: medRec[index]}).then(function (data) {
+                $scope.chosen = true
+                $scope.Combine = data.Combine
+                $scope.drugs = data.DrugName
+                $scope.Level = data.Level
+                drugList = data.Drug
+              })
+              break
+            case 'unrec':
+              MedicationRec.groupsInfo({rec: medUnRec[index]}).then(function (data) {
+                $scope.chosen = true
+                $scope.Combine = data.Combine
+                $scope.drugs = data.DrugName
+                $scope.Level = data.Level
+
+                drugList = data.Drug
+              })
+              break
+            case 'caution':
+              MedicationRec.groupsInfo({rec: medCaution[index]}).then(function (data) {
+                $scope.chosen = true
+                $scope.Combine = data.Combine
+                $scope.Level = data.Level
+
+                $scope.drugs = data.DrugName
+                drugList = data.Drug
+              })
+              break
+          }
+        }
+        $scope.modal_close = function (target) {
+          $(target).modal('hide')
+        }
+
+        $scope.showinfo = function (index) {
+          MedicationRec.drugsInfo({ DIn: drugList[index] }).then(function (data) {
+            $scope.info = data
+          })
+
           $('#drugdetail').modal('show')
         }
       }
@@ -237,43 +563,42 @@
       }
 
     ])
-    .controller('selectCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT', 'InfoInput',
+    .controller('selectCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT', 'InfoInput', '$timeout',
 
-        function($scope, Storage, Data, $state, riskToONT, InfoInput) {
-            var userlist = new Array()
-            InfoInput.PatientInfo({ guid: "P000125" }).then(function(data) {
-                data.patientid = "P000125"
-                userlist.push(data)
-            })
-            InfoInput.PatientInfo({ guid: "P000126" }).then(function(data) {
-                data.patientid = "P000126"
-                userlist.push(data)
-            })
-            InfoInput.PatientInfo({ guid: "P000121" }).then(function(data) {
-                data.patientid = "P000121"
-                userlist.push(data)
-            })
-            $scope.userlist = userlist
-            $scope.toUserDetail = function(ID) {
-                Storage.set('currentPatient', ID)
-                riskToONT.normalRisk(ID)
-                riskToONT.stateRisk(ID)
+      function ($scope, Storage, Data, $state, riskToONT, InfoInput, $timeout) {
+        var userlist = new Array()
+        InfoInput.PatientInfo({ guid: 'P000125' }).then(function (data) {
+          data.patientid = 'P000125'
+          userlist.push(data)
+        })
+        $timeout(
+          InfoInput.PatientInfo({ guid: 'P000121' }).then(function (data) {
+            data.patientid = 'P000121'
+            userlist.push(data)
+          }),
+          500)
+
+        $scope.userlist = userlist
+
+        $scope.toUserDetail = function (pat) {
+          Storage.set('currentPatient', pat.patientid)
+          riskToONT.normalRisk(pat.patientid)
+          riskToONT.stateRisk(pat.patientid)
+          Storage.set('PatientInfo', JSON.stringify(pat))
                 // currentPatient记录当前选择的患者
           $state.go('main.monitors.inspection')
         }
       }
     ])
 
-    .controller('selectlistCtrl', ['$scope', 'Storage', 'Data', '$state', 'riskToONT',
+    .controller('selectlistCtrl', ['$scope', 'Storage', 'Data', '$state',
 
-        function($scope, Storage, Data, $state, riskToONT) {
-
-            $scope.createPats = function() {
-                $state.go('main.selectlist.input')
-            }
-            $scope.currentPats = function() {
-                $state.go('main.selectlist.select')
-            }
+      function ($scope, Storage, Data, $state) {
+        $scope.createPats = function () {
+          $state.go('main.selectlist.input')
+        }
+        $scope.currentPats = function () {
+          $state.go('main.selectlist.select')
         }
       }
     ])

@@ -8,10 +8,10 @@
     	</div>
     </div> -->
     <div class="row">
-    	<div class="col-sm-2">
+    	<div class="col-sm-1">
     		
     	</div>
-		<div class="col-sm-4" id="examRec">
+		<div class="col-sm-5" id="examRec">
 			<div class="myCard">
 		      	<h3 class="card-title cardTitle">医学检查建议</h3>
 		      	<div>
@@ -50,9 +50,10 @@
 		      	
 			</div>
 		</div>
-		<div class="col-sm-4" id="screenRec">
+		<div class="col-sm-5" id="screenRec">
 			<div class="myCard">
 		      	<h3 class="card-title cardTitle">疾病筛查建议</h3>
+		      	<p ng-if="!screens.length" class="warning">暂无疾病筛查建议</p>
 		      	<div ng-repeat="screen in screens">
 		      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">{{screen.ScreenRec}}</h5> 
 		      		<p style="text-align: right;color:#aaa;font-weight: bold;">筛查间隔：{{screen.interval}}（月）</p>
@@ -73,7 +74,7 @@
 		      	
 			</div>
 		</div>
-		<div class="col-sm-2">
+		<div class="col-sm-1">
     		
     	</div>
 	</div>

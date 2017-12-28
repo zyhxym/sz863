@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-md-4"></div>
+	<div class="myCard col-md-4">
+      	<h3 class="card-title cardTitle" style="text-align: center">初步诊断</h3>
+      	<div>
+      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">风险疾病</h5>
+      		<p class="warning" ng-if="!diags.Suspecious.length">暂无风险疾病</p> 
+
+	      	<ol style="margin-top: 10px" class="must">
+	      			<li ng-repeat="sus in diags.Suspecious">{{sus}}</li>
+	      			
+	      	</ol>
+	      	
+      	</div>
+      	<div>
+      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">诊断建议</h5> 
+      		<p class="warning" ng-if="!diags.Diagnosis.length">暂无诊断建议</p> 
+			
+	      	<ol style="margin-top: 10px" class="must">
+	      		<li ng-repeat="diag in diags.Diagnosis">{{diag}}</li>
+	      			
+	      	</ol>
+	      	
+      	</div>
+      	<div>
+      		<h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">建议原因</h5> 
+      		<p class="warning" ng-if="!diags.Reason.length">暂无建议原因</p> 
+			
+	      	<ol style="margin-top: 10px" class="must">
+	      		<li ng-repeat="rea in diags.Reason">{{rea}}</li>
+	      			
+	      	</ol>
+	      	
+      	</div>
+      	
+	</div>
+	<div class="col-md-4"></div>
+
+</div>

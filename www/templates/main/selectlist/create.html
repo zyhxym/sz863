@@ -1,0 +1,253 @@
+<div class="row">
+    <form class="form-horizontal col-md-11" role="form">
+        <div class="row" ng-show="inputPage==1">
+            <div class="col-md-1"></div>
+            <div class="myCard col-md-11">
+                <h3 class="card-title cardTitle" style="text-align: center;">基本生理参数</h3>
+
+                <div class="col-md-6" style="margin-top: 20px">
+                    <div class="form-group">
+                        <label for="height" class="col-sm-4 control-label">身高(cm)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="height" 
+                                   placeholder="请输入身高">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-4 control-label">体重(kg)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="lastname" 
+                                   placeholder="请输入体重">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Hpressure" class="col-sm-4 control-label">收缩压(mmHg)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="Hpressure" 
+                                   placeholder="请输入收缩压">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Lpressure" class="col-sm-4 control-label">舒张压(mmHg)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="Lpressure" 
+                                   placeholder="请输入舒张压">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sugar" class="col-sm-4 control-label">空腹血糖</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="sugar" 
+                                   placeholder="请输入空腹血糖">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sugar2h" class="col-sm-4 control-label">糖耐受2小时后血糖</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="sugar2h" 
+                                   placeholder="请输入糖耐受2小时后血糖">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sProtein" class="col-sm-4 control-label">糖化血红蛋白</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="sProtein" 
+                                   placeholder="请输入糖化血红蛋白">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="HPL" class="col-sm-4 control-label">高密度脂蛋白胆固醇</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="HPL" 
+                                   placeholder="请输入高密度脂蛋白胆固醇">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: 20px">
+                    <div class="form-group">
+                        <label for="LPL" class="col-sm-4 control-label">低密度脂蛋白胆固醇</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="LPL" 
+                                   placeholder="请输入低密度脂蛋白胆固醇">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cholesterol" class="col-sm-4 control-label">总胆固醇</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="cholesterol" 
+                                   placeholder="请输入总胆固醇">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Triglycerides" class="col-sm-4 control-label">甘油三酯</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="Triglycerides" 
+                                   placeholder="请输入甘油三酯">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="urineRatio" class="col-sm-4 control-label">尿白蛋白/肌酐比值</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="urineRatio" 
+                                   placeholder="请输入尿白蛋白/肌酐比值">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ecr" class="col-sm-4 control-label">尿白蛋白排泄率</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="ecr" 
+                                   placeholder="请输入尿白蛋白排泄率">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Homocysteine" class="col-sm-4 control-label">同型半胱氨酸</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="Homocysteine" 
+                                   placeholder="请输入同型半胱氨酸">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phosphokinase" class="col-sm-4 control-label">磷酸肌酸激酶</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="phosphokinase" 
+                                   placeholder="请输入磷酸肌酸激酶">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="aminotransferase" class="col-sm-4 control-label">丙氨酸转氨酶</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="aminotransferase" 
+                                   placeholder="请输入丙氨酸转氨酶">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row" ng-show ="inputPage==2">
+            <div class="col-md-1"></div>
+            <div class="myCard col-md-5">
+                <h3 class="card-title cardTitle">生理体征(可多选)</h3>
+                
+                
+                <div class="checkbox" ng-repeat="phy in phys">
+                    <label  for="{{phy.name}}" >
+                        <input type="checkbox" value="{{phy.value}}">{{phy.name}}
+                    </label>
+                </div>
+                
+                    
+            </div>
+            <div class="col-md-1"></div>
+
+            <div class="myCard col-md-5">
+                <h3 class="card-title cardTitle">生活习惯和家族信息（可多选）</h3>
+                <div class="checkbox" ng-repeat="habit in habits">
+                    <label  for="{{habit.name}}" >
+                        <input type="checkbox" value="{{habit.value}}">{{habit.name}}
+                    </label>
+                </div>
+                <label for="exercise" class="control-label" style="margin-top: 30px" >每周运动时间(h)</label>
+                <input type="number" class="form-control" id="exercise" placeholder="请输入每周运动时间(h)">
+                
+
+            </div>
+
+
+            
+        </div>
+        <div class="row" ng-show="inputPage==3">
+            <div class="col-md-1"></div>
+            <div class="myCard col-md-11">
+                <h3 class="card-title cardTitle">诊断结果（可多选）</h3>
+                <div class="row" style="height: 200px">
+                    <div class="col-md-3">
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">内分泌疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.endocrine">
+                            <label  for="{{diag.name}}" style="font-size: 15px">
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">心血管疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.cardio">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">肾脏疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.kidney">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">血液疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.blood">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                    
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">心脏疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.heart">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">呼吸系统疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.breathe">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">脑血管疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.brain">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        
+                        <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;">其他疾病</h5> 
+                        <div class="checkbox" ng-repeat="diag in diags.other">
+                            <label  for="{{diag.name}}" >
+                                <input type="checkbox" value="{{diag.value}}">{{diag.name}}
+                            </label>
+                        </div>
+                        
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <div class="col-md-1">
+        <button type="button" class="btn btn-primary" style="position: fixed; bottom: 400px; right: 80px;" ng-show="previous" ng-click="last()">
+            上一步
+        </button>
+        <button type="button" class="btn btn-primary" style="position: fixed; bottom: 350px; right: 80px;" ng-click="next()">
+            {{buttonText}}
+        </button>
+       
+    </div>
+</div>
+

@@ -31,7 +31,7 @@
     .factory('Data', ['$resource', '$q', '$interval', 'CONFIG', 'Storage', function ($resource, $q, $interval, CONFIG, Storage) {
       var serve = {}
       var abort = $q.defer
-      var period = 10000
+      var period = 20000
       // 本体
       var Ontology = function () {
         return $resource(CONFIG.baseUrl + ':path/:route', {
@@ -93,7 +93,6 @@
           drugsInfo: { method: 'GET', params: { route: 'DrugInfo', DIn: '@DIn'}, timeout: period },
           drugGroupsRec: { method: 'GET', params: { route: 'MedRecGen', guid: '@guid'}, timeout: period },
           groupsInfo: { method: 'GET', params: { route: 'MedRecInfo'}, timeout: period }
-
 
         })
       }
@@ -356,7 +355,6 @@
         })
         return deferred.promise
       }
-<<<<<<< HEAD
       self.groupsInfo = function (obj) {
         var deferred = $q.defer()
         Data.MedicationRec.groupsInfo(obj, function (data, headers) {
@@ -366,10 +364,16 @@
         })
         return deferred.promise
       }
+      self.drugGroupsRec = function (obj) {
+        var deferred = $q.defer()
+        Data.MedicationRec.drugGroupsRec(obj, function (data, headers) {
+          deferred.resolve(data)
+        }, function (err) {
+          deferred.reject(err)
+        })
+        return deferred.promise
+      }
 
-=======
-        
->>>>>>> refs/remotes/Joooooooye/master
       return self
     }])
     // 生活建议

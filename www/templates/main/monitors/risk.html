@@ -8,6 +8,8 @@
                 <div class="gridTex" ng-repeat="DiaName in risk.DiaName" style="margin-top: 10px;margin-left:10px">
                     {{DiaName}}
                 </div>
+                <p class="warning" ng-if="!risk.DiaName.length">暂无该风险因子</p>
+
                 <hr>
             </div>
         </div>
@@ -21,6 +23,7 @@
                 <div class="gridTex"  ng-repeat="StrokeName in risk.StrokeName" style="margin-top: 10px;margin-left:10px">
                     {{StrokeName}}
                 </div>
+                <p class="warning" ng-if="!risk.StrokeName.length">暂无该风险因子</p>
                 <hr>
             </div>
         </div>
@@ -34,6 +37,8 @@
                 <div class="gridTex"  ng-repeat="HypName in risk.HypName" style="margin-top: 10px;margin-left:10px">
                     {{HypName}}
                 </div>
+                <p class="warning" ng-if="!risk.HypName.length">暂无该风险因子</p>
+                
                 <hr>
             </div>
         </div>
@@ -47,6 +52,8 @@
                 <div class="gridTex"  ng-repeat="CVDName in risk.CVDName" style="margin-top: 10px;margin-left:10px">
                     {{CVDName}}
                 </div>
+                <p class="warning" ng-if="!risk.CVDName.length">暂无该风险因子</p>
+
                 <hr>
             </div>
         </div>

@@ -1,32 +1,12 @@
 <div class="container-fluid" style="padding-right:0px;padding-left: 0px; ">
-    <h1 style="margin-left: 20px; margin-top: 20px; position: absolute;">临床决策支持系统</h1>
-    <div style="margin-top: 10px" ng-show="ifpatient">
-            <div class=" col-md-3 ">
-        </div>
-        <div class=" col-md-3 ">
-            <div class="form-group ">
-                <h5><b>患者姓名：</b>{{user.name}}</h5>
-                <h5><b>创建时间：</b>{{user.time|negativeFix}}</h5>
-            </div>
-        </div>
-        <div class="col-md-3 ">
-            <div class="form-group ">
-                <h5><b>患者年龄：</b>{{user.age}}</h5>
-                <h5><b>患者性别：</b>{{user.gender}}</h5>
-            </div>
-        </div>
-        <div class="col-md-3 ">
-            <div class="form-group ">
-                <h5><b>已确诊疾病：</b>{{user.diseae|arraytostring}}</h5>
-            </div>
-        </div>
-    </div>
-    <ul id="mytabs" class="nav nav-tabs" style="font-size: 15px;height: 80px;padding-top: 35px;padding-right: 5px">
+    <h1 style="margin-left: 20px; margin-top: 20px; position: absolute;color: #ffffff">临床决策支持系统</h1>
+    
+    <ul id="mytabs" class="nav nav-tabs" style="font-size: 15px;height: 80px;padding-top: 35px;padding-right: 5px;background-color: #337ab7">
 
         <li class="navbar-right" style="margin-right:5px">
 
             <a id="drop_info" class="navbar-brand" style="height:43px" data-toggle="dropdown">
-          <span style="font-size: 25px" class="glyphicon glyphicon-user"></span>
+          <span style="font-size: 25px;color: #ffffff" class="glyphicon glyphicon-user"></span>
         </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="drop_info" style="min-width:220px">
                 <li role="presentation">
