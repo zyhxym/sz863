@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6 myCard">
+        <h3 class="card-title cardTitle" style="text-align: center">用药方案</h3>
+        <div class="row">
+            <div class="col-md-4" style="text-align: center;">
+                <h5 class="label label-success" style="font-size: 12px;margin-top: 10px;">建议用药方案</h5>
+                <div ng-repeat="rec in group.MedRec" style="text-align: left;">
+                    <button type="button" class="btn btn-link" ng-click="medicine('rec',$index)" style="color: #5cb85c"> {{rec}}
+                    </button>
+                </div>
+                
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <h5 class="label label-warning" style="font-size: 12px;margin-top: 10px;display: inline-block;text-align: center;">不建议用药方案</h5> 
+                <div ng-repeat="unrec in group.MedUnRec" style="text-align: left;">
+                    <button type="button" class="btn btn-link" ng-click="medicine('unrec',$index)" style="color: #f0ad4e"> {{unrec}}
+                    </button>
+                </div>
+               
+               
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <h5 class="label label-danger" style="font-size: 12px;margin-top: 10px;display: inline-block;text-align: center;">警惕用药方案</h5> 
+                <div ng-repeat="caution in group.MedCauRec" style="text-align: left;">
+                    <button type="button" class="btn btn-link" ng-click="medicine('caution',$index)" style="color: #d9534f"> {{caution}}
+                    </button>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+    </div>
+    <div class="col-md-1"></div>
+
+    <div class="col-md-4 myCard" >
+        <h3 class="card-title cardTitle" style="text-align: center">药物组合</h3>
+        <p class="warning" ng-if="!chosen">
+            请在左边选择药物方案
+        </p>
+        <div ng-if="chosen">
+            <p class="label label-primary" ng-if="Combine==1" style="font-size: 15px;float: right;">联合使用</p>
+            <p class="label label-primary" ng-if="Combine==0" style="font-size: 15px;float: right;">从中选择</p>
+            <p class="label label-success" ng-if="Level" style="font-size: 15px;float: right;">建议等级：{{Level}}</p>
+            
+
+            <div ng-repeat="drug in drugs" style="font-size: 15px;line-height:25px">
+                <button type="button" class="btn btn-link" ng-click="showinfo($index)"> {{drug}}
+                </button>
+            </div>
+        </div>
+        
+        
+      
+    </div>
+    
+
+        
+</div>
+
+<!-- 药物具体信息 -->
+<div class="modal fade" id="drugdetail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-style: none">
+                <button type="button" class="close" ng-click="modal_close('#drugdetail')">&times;</button>
+                <h3 class="modal-title" id="modal-title">药物具体信息</h3>
+            </div>
+            <div class="modal-body" id="modal-body">
+        <ul class="list-group">
+            <li class="list-group-item" ng-if="info.Dname!=-1">药物名称：{{info.Dname}}</li>
+            <li class="list-group-item" ng-if="info.Dtype!=-1">药物类型：{{info.Dtype}}</li>
+            <li class="list-group-item" ng-if="info.Ddoup!=-1">剂量上限：{{info.Ddoup}} {{info.Dun}}</li>
+            <li class="list-group-item" ng-if="info.Ddodn!=-1">剂量下限：{{info.Ddodn}} {{info.Dun}}</li>
+            <li class="list-group-item" ng-if="info.Dtup!=-1">使用次数上限：{{info.Dtup}}</li>
+            <li class="list-group-item" ng-if="info.Dtdn!=-1">使用次数下限：{{info.Dtdn}}</li>
+            <li class="list-group-item" ng-if="info.Duse!=-1">使用说明：{{info.Duse}}</li>        
+        </ul>
+    </div>
+            <div class="modal-footer" style="border-style: none">
+                <button type="button" class="btn btn-primary" ng-click="modal_close('#drugdetail')">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

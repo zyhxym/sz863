@@ -31,7 +31,7 @@
     .factory('Data', ['$resource', '$q', '$interval', 'CONFIG', 'Storage', function ($resource, $q, $interval, CONFIG, Storage) {
       var serve = {}
       var abort = $q.defer
-      var period = 10000
+      var period = 20000
       // 本体
       var Ontology = function () {
         return $resource(CONFIG.baseUrl + ':path/:route', {
@@ -53,7 +53,7 @@
           addPatProperty: { method: 'POST', params: { route: 'addObjProperty', guid: '@guid' }, timeout: period },
           createPat: { method: 'POST', params: { route: 'crePatient' }, timeout: period },
           // 获取当前患者信息
-          PatientInfo: { method: 'GET', params: { route: 'PatientInfo', guid: '@guid' }, timeout: period },
+          PatientInfo: { method: 'GET', params: { route: 'PatientInfo', guid: '@guid' }, timeout: period }
         })
       }
       // 诊断
@@ -65,7 +65,8 @@
           // 分析患者需要防控的疾病，不做展示，但需要作为输入添加到患者属性中，即返回结果需要调用addObjProperty方法输入给患者。
           riskDiagnosis: { method: 'GET', params: { route: 'RiskDiagnosis', guid: '@guid' }, timeout: period },
           // 推断患者个人生理状态，不做展示，但需要作为输入添加到患者属性中，即返回结果需要调用addObjProperty方法输入给患者。
-          state: { method: 'GET', params: { route: 'state', guid: '@guid' }, timeout: period }
+          state: { method: 'GET', params: { route: 'state', guid: '@guid' }, timeout: period },
+          diseaseDiag: {method: 'GET', params: { route: 'DiseaseDiagnose', guid: '@guid' }, timeout: period }
 
         })
       }
@@ -90,7 +91,9 @@
           drugsRec: { method: 'GET', params: { route: 'DrugProvider', guid: '@guid' }, timeout: period },
           // 查询药物具体信息，包括名称、类型、用量、注意事项等，对接DrugProvider方法。需要将DrugProvider得到的DList、DListA和DListC输入到DrugInfo中，得到药物信息。
           drugsInfo: { method: 'GET', params: { route: 'DrugInfo', DIn: '@DIn'}, timeout: period },
-      
+          drugGroupsRec: { method: 'GET', params: { route: 'MedRecGen', guid: '@guid'}, timeout: period },
+          groupsInfo: { method: 'GET', params: { route: 'MedRecInfo'}, timeout: period }
+
         })
       }
 
@@ -231,6 +234,16 @@
         })
         return deferred.promise
       }
+      self.diseaseDiag = function (obj) {
+        var deferred = $q.defer()
+        Data.Diagnosis.diseaseDiag(obj, function (data, headers) {
+          deferred.resolve(data)
+        }, function (err) {
+          deferred.reject(err)
+        })
+        return deferred.promise
+      }
+
       return self
     }])
 
@@ -342,7 +355,25 @@
         })
         return deferred.promise
       }
-        
+      self.groupsInfo = function (obj) {
+        var deferred = $q.defer()
+        Data.MedicationRec.groupsInfo(obj, function (data, headers) {
+          deferred.resolve(data)
+        }, function (err) {
+          deferred.reject(err)
+        })
+        return deferred.promise
+      }
+      self.drugGroupsRec = function (obj) {
+        var deferred = $q.defer()
+        Data.MedicationRec.drugGroupsRec(obj, function (data, headers) {
+          deferred.resolve(data)
+        }, function (err) {
+          deferred.reject(err)
+        })
+        return deferred.promise
+      }
+
       return self
     }])
     // 生活建议

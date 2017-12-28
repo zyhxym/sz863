@@ -1,15 +1,39 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-2" style="text-align: center;font-size: 15px;margin-top: 10px;margin-left: 10px;width:auto;">
+        <div class=" col-md-1 ">
+        </div>
+        <div class=" col-md-2 ">
+            <p class="patinfo"><b>患者姓名：</b>{{pat.name}}</p>
+        </div>
+        <div class=" col-md-2 ">
+            <p class="patinfo"><b>创建时间：</b>{{pat.time|negativeFix}}</p>
+        </div>
+        <div class="col-md-2 ">
+            <p class="patinfo"><b>患者年龄：</b>{{pat.age}}</p>
+        </div>
+        <div class="col-md-2 ">
+            <p class="patinfo"><b>患者性别：</b>{{pat.gender}}</p>
+                
+        </div>
+        <div class="col-md-2 ">
+            <p class="patinfo"><b>已确诊疾病：</b>{{pat.diseae|arraytostring}}</p>
+        </div>
+         <div class=" col-md-1 ">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2" style="text-align: center;font-size: 15px;margin-top: 10px;margin-left: 10px;width:auto;">
             <uib-tabset active="activePill" vertical="true" type="pills">
-                <uib-tab index="0" heading="检查建议" select="toinspection()"></uib-tab>
-                <uib-tab index="1" heading="风险因子" select="torisk()"></uib-tab>
-                <uib-tab index="2" heading="用药建议" select="tomedicine()"></uib-tab>
-                <uib-tab index="3" heading="生活建议" select="tolife()"></uib-tab>
-                <uib-tab index="4" heading="指标评估" select="toassess()"></uib-tab>
+                <uib-tab index="0" heading="诊断建议" select="todiagnosis()"></uib-tab>
+                <uib-tab index="1" heading="检查建议" select="toinspection()"></uib-tab>
+                <uib-tab index="2" heading="风险因子" select="torisk()"></uib-tab>
+                <uib-tab index="3" heading="适用药物" select="tomedicine()"></uib-tab>
+                <uib-tab index="4" heading="用药方案" select="tomedicineGroup()"></uib-tab>
+                <uib-tab index="5" heading="生活建议" select="tolife()"></uib-tab>
+                <uib-tab index="6" heading="指标评估" select="toassess()"></uib-tab>
             </uib-tabset>
         </div>
-        <div class="col-xs-10" style="margin-top:30px;">
+        <div class="col-md-10" style="margin-top:30px;">
             <div ui-view>
             </div>
         </div>
