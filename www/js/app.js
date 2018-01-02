@@ -105,7 +105,7 @@ angular.module('IntelligentDetector', ['ui.router', 'ui.bootstrap', 'controllers
           if (response.config.url.toString().indexOf('http:') === 0) {
             if (response.data.flag != 1) {
               var $http = $injector.get('$http')
-              return $http(response)
+              return $http(response.config)
             }
             $('body').LoadingOverlay('hide')
           }
