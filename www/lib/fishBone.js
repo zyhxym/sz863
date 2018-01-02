@@ -8,7 +8,7 @@ $.fn.fishBone = function (data) {
     // 2.自适应
   var rowcount = fixWindow()
     // 3.翻页滚动效果
-  jQuery('.fishBone01').slide({
+  jQuery('#fishBone01').slide({
     titCell: '.hd ul',
     mainCell: '.bd>ul',
     autoPage: true,
@@ -17,7 +17,7 @@ $.fn.fishBone = function (data) {
     scroll: rowcount,
     vis: rowcount
   })
-  jQuery('.fishBone02').slide({
+  jQuery('#fishBone02').slide({
     titCell: '.hd ul',
     mainCell: '.bd>ul',
     autoPage: true,
@@ -26,7 +26,7 @@ $.fn.fishBone = function (data) {
     scroll: rowcount,
     vis: rowcount
   })
-  jQuery('.fishBone03').slide({
+  jQuery('#fishBone03').slide({
     titCell: '.hd ul',
     mainCell: '.bd>ul',
     autoPage: true,
