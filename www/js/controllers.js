@@ -616,7 +616,7 @@
         }
     ])
 
-    .controller('fishboneCtrl', ['$scope', 'Storage', '$state', function($scope, Storage, $state) {
+    .controller('fishboneCtrl', ['$scope', 'Storage', '$state', '$timeout', function($scope, Storage, $state, $timeout) {
         $scope.UserName = Storage.get('currentUser')
         $scope.Role = Storage.get('currentrole')
         $scope.logout = function() {
@@ -679,35 +679,37 @@
         var detail = ""
 
         var query_detail = function() {
-            $("li.step").popover({
-                title: '<div style="width:200px;font-size:17px;height:20px">详情</div>',
-                content: '<div style="width:200px;font-size:15px;height:100px">' + detail + '</div>',
-                html: true
-            }).on("mouseenter", function(event) {
-                people = ""
-                region = ""
-                detail = ""
+            $("li.step").on("mouseenter", function(event) {
+                // $scope.people = ""
+                // $scope.region = ""
+                // $scope.detail = ""
                 var str = event.target.innerText
                 var str_after = str.split("：")[1];
                 for (i = 0; i < data.length; i++) {
                     if (str_after == data[i].step) {
-                        people = data[i].people
-                        region = data[i].region
-                        if (people != "" && region != "") {
-                            detail = "针对人群：" + people + "\n" + "针对地区：" + region
-                        } else if (people == "" && region != "") {
-                            detail = "针对地区：" + region
-                        } else if (people != "" && region == "") {
-                            detail = "针对人群：" + people
+                        $scope.step = data[i].step
+                        $scope.people = data[i].people
+                        $scope.region = data[i].region
+                        if ($scope.people != "" && $scope.region == "") {
+                            $scope.region = "无"
+                        } else if ($scope.people == "" && $scope.region != "") {
+                            $scope.people = "无" 
                         }
                     }
                 }
-                console.log(detail)
-                var _this = this;
-                $(this).popover("show");
-                $(this).siblings(".popover").on("mouseleave", function() {
-                    $(_this).popover('hide');
-                });
+
+                // var _this = this;
+                // $(this).popover("show");
+                // $(this).siblings(".popover").on("mouseleave", function() {
+                //     $(_this).popover('hide');
+                // });
+                // console.log($scope.people)
+                $timeout(function() {
+                    $('#step_detail').modal('show');
+                }, 100);
+                $timeout(function() {
+                    $('#step_detail').modal('hide');
+                }, 2000);
             }).on("mouseleave", function() {
                 var _this = this;
                 setTimeout(function() {
@@ -716,6 +718,12 @@
                     }
                 }, 100);
             })
+            // .popover({
+            //   delay:{ show: 500, hide: 100 },
+            //     title: '<div style="width:200px;font-size:17px;height:20px">详情</div>',
+            //     content: '<div style="width:200px;font-size:15px;height:100px">' + $scope.detail + '</div>',
+            //     html: true
+            // })
         }
         query_detail()
     }])
